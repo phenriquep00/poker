@@ -1,10 +1,11 @@
 import pygame
 import deck
+import os
 
-X = 400
-Y = 400
+X = 901
+Y = 600
 white = (255, 255, 255)
-
+bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
 
@@ -12,7 +13,7 @@ display_surface = pygame.display.set_mode((X, Y))
 while True:
     # completely fill the surface object
     # with white colour
-    display_surface.fill(white)
+    display_surface.blit(bg, (0, 0))
 
     # copying the image surface object
     # to the display surface object at
