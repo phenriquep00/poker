@@ -1,13 +1,16 @@
 import pygame
 import deck
+import player
 import os
 
-X = 901
-Y = 600
-white = (255, 255, 255)
+X, Y = 901, 600
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
+
+# Generate player object and setting it's card hand
+player = player.Player()
+player.hand = deck.give_cards()
 
 display_surface = pygame.display.set_mode((X, Y))
 while ...:
@@ -17,7 +20,8 @@ while ...:
     # copying the image surface object
     # to the display surface object at
     # (0, 0) coordinate.
-    display_surface.blit(deck.deck[0].image, (0, 0))
+    display_surface.blit(player.hand[0].image, (0, 0))
+    display_surface.blit(player.hand[1].image, (40, 0))
 
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.

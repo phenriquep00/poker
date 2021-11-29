@@ -4,7 +4,7 @@ import random
 
 
 class Deck:
-    # TODO: shuffle deck method
+
     def __init__(self):
         self.clubs = [Card(image=f'{_}.png', value=_, suit='clubs') for _ in range(2, 15)]
         self.diamonds = [Card(image=f'{_}.png', value=_, suit='diamonds') for _ in range(2, 15)]
@@ -18,6 +18,13 @@ class Deck:
                 self.deck.append(i)
 
         random.shuffle(self.deck)
+
+    def give_cards(self):
+        a = self.deck[0]
+        self.deck.pop(0)
+        b = self.deck[0]
+        self.deck.pop(0)
+        return a, b
 
 
 class Card:
