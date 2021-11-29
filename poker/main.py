@@ -10,9 +10,8 @@ deck = deck.Deck()
 deck.shuffle()
 
 display_surface = pygame.display.set_mode((X, Y))
-while True:
+while ...:
     # completely fill the surface object
-    # with white colour
     display_surface.blit(bg, (0, 0))
 
     # copying the image surface object
