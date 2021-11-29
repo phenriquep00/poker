@@ -3,7 +3,7 @@ import os
 
 
 class Deck:
-
+    # TODO: shuffle deck method
     def __init__(self):
         self.clubs = [Card(image=f'{_}.png', value=_, suit='clubs') for _ in range(2, 15)]
         self.diamonds = [Card(image=f'{_}.png', value=_, suit='diamonds') for _ in range(2, 15)]
