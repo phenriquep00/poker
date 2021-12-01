@@ -20,25 +20,20 @@ class Deck:
         random.shuffle(self.deck)
 
     def give_cards(self):
-        a = self.deck[0]
-        self.deck.pop(0)
-        b = self.deck[0]
-        self.deck.pop(0)
-        return a, b
+        cards = []
+        for _ in range(2):
+            _ = self.deck[0]
+            self.deck.pop(0)
+            cards.append(_)
+        return cards[0], cards[1]
 
     def give_table_cards(self):
-        # TODO: make this less repetitive
-        a = self.deck[0]
-        self.deck.pop(0)
-        b = self.deck[0]
-        self.deck.pop(0)
-        c = self.deck[0]
-        self.deck.pop(0)
-        d = self.deck[0]
-        self.deck.pop(0)
-        e = self.deck[0]
-        self.deck.pop(0)
-        return a, b, c, d, e
+        cards = []
+        for _ in range(5):
+            _ = self.deck[0]
+            self.deck.pop(0)
+            cards.append(_)
+        return cards[0], cards[1], cards[2], cards[3], cards[4]
 
 
 class Card:
