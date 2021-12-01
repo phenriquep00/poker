@@ -26,6 +26,20 @@ class Deck:
         self.deck.pop(0)
         return a, b
 
+    def give_table_cards(self):
+        # TODO: make this less repetitive
+        a = self.deck[0]
+        self.deck.pop(0)
+        b = self.deck[0]
+        self.deck.pop(0)
+        c = self.deck[0]
+        self.deck.pop(0)
+        d = self.deck[0]
+        self.deck.pop(0)
+        e = self.deck[0]
+        self.deck.pop(0)
+        return a, b, c, d, e
+
 
 class Card:
     # Each card will have a image attribute (from pics) and a value
