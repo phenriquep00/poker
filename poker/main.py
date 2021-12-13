@@ -57,6 +57,15 @@ bot3.hand = deck.give_cards()
 hide_card(bot3.hand[0])
 hide_card(bot3.hand[1])
 
+# font
+pygame.init()
+font = pygame.font.Font('freesansbold.ttf', 24)
+player_text = font.render(player.name, True, (255, 255, 255))
+# TODO: give the bots random actual names somehow
+bot1_text = font.render("bot1", True, (255, 255, 255))
+bot2_text = font.render("bot2", True, (255, 255, 255))
+bot3_text = font.render("bot3", True, (255, 255, 255))
+
 window = pygame.display.set_mode((X, Y))
 while ...:
     # completely fill the surface object
@@ -66,6 +75,12 @@ while ...:
     # player's cards
     window.blit(player.hand[0].image, (380, 500))
     window.blit(player.hand[1].image, (420, 500))
+
+    # text drawing
+    window.blit(player_text, (400, 460))
+    window.blit(bot1_text, (0, 220))
+    window.blit(bot2_text, (400, 100))
+    window.blit(bot3_text, (811, 220))
 
     # table cards
     coor = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
@@ -82,8 +97,8 @@ while ...:
     window.blit(bot2.hand[1].image, (420, 0))
 
     # bot3
-    blit_rotate_center(window, bot3.hand[0].image, (901-90, 240), 90)
-    blit_rotate_center(window, bot3.hand[1].image, (901-90, 280), 90)
+    blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
+    blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
 
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.
