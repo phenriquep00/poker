@@ -24,6 +24,7 @@ def show_card(card, value, suit):
 
 
 X, Y = 901, 600
+card1_x, card1_y, card2_x, card2_y = 380, 500, 420, 500
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
@@ -66,15 +67,15 @@ bot1_text = font.render("bot1", True, (255, 255, 255))
 bot2_text = font.render("bot2", True, (255, 255, 255))
 bot3_text = font.render("bot3", True, (255, 255, 255))
 
+
+# sound FX
+pygame.mixer.init()
+card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))    # from freesound
+
 window = pygame.display.set_mode((X, Y))
 while ...:
     # completely fill the surface object
     window.blit(bg, (0, 0))
-
-    # draw cards on the window
-    # player's cards
-    window.blit(player.hand[0].image, (380, 500))
-    window.blit(player.hand[1].image, (420, 500))
 
     # text drawing
     window.blit(player_text, (400, 460))
@@ -86,6 +87,11 @@ while ...:
     coor = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
     for _ in range(5):
         window.blit(table.cards[_].image, coor[_])
+
+    # draw cards on the window
+    # player's cards
+    window.blit(player.hand[0].image, (card1_x, card1_y))
+    window.blit(player.hand[1].image, (card2_x, card2_y))
 
     # bots' cards
     # bot1
@@ -113,6 +119,30 @@ while ...:
 
             # quit the program.
             quit()
+
+        # mouse events
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # (380, 500) (420, 500)
+            # click on player's card 1
+            if 420 > pygame.mouse.get_pos()[0] > 380 and 600 > pygame.mouse.get_pos()[1] > 500:
+                card1_x, card1_y = 370, 490
+                card2_x, card2_y = 420, 500
+                card_FX.play()
+
+            # click on player's card 2
+            elif 515 > pygame.mouse.get_pos()[0] > 420 and 600 > pygame.mouse.get_pos()[1] > 500:
+                card2_x, card2_y = 430, 490
+                card1_x, card1_y = 380, 500
+                card_FX.play()
+
+            # click outside a card
+            else:
+                # make the card sound effect if one of player's card is out of place
+                if card1_x == 370 or card2_x == 430:
+                    card_FX.play()
+                card2_x, card2_y = 420, 500
+                card1_x, card1_y = 380, 500
 
         # Draws the surface object to the screen.
         pygame.display.update()
