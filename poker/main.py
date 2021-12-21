@@ -29,6 +29,9 @@ bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
 
+# chip img
+chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
+
 # Generate player object and setting it's card hand
 player = player.Player()
 player.hand = deck.give_cards()
@@ -66,6 +69,12 @@ player_text = font.render(player.name, True, (255, 255, 255))
 bot1_text = font.render("bot1", True, (255, 255, 255))
 bot2_text = font.render("bot2", True, (255, 255, 255))
 bot3_text = font.render("bot3", True, (255, 255, 255))
+# chips
+player_chips = font.render(f': {player.chips}', True, (255, 255, 255))
+bot1_chips = font.render(f': {bot1.chips}', True, (255, 255, 255))
+bot2_chips = font.render(f': {bot2.chips}', True, (255, 255, 255))
+bot3_chips = font.render(f': {bot3.chips}', True, (255, 255, 255))
+table_pot = font.render(f': {table.pot}', True, (255, 255, 255))
 
 
 # sound FX
@@ -78,10 +87,25 @@ while ...:
     window.blit(bg, (0, 0))
 
     # text drawing
-    window.blit(player_text, (400, 460))
-    window.blit(bot1_text, (0, 220))
-    window.blit(bot2_text, (400, 100))
-    window.blit(bot3_text, (811, 220))
+    # names
+    window.blit(player_text, (510, 510))
+    window.blit(bot1_text, (10, 170))
+    window.blit(bot2_text, (500, 20))
+    window.blit(bot3_text, (811, 170))
+    # chips values
+    window.blit(player_chips, (550, 550))
+    window.blit(bot1_chips, (40, 220))
+    window.blit(bot2_chips, (540, 60))
+    window.blit(bot3_chips, (820, 220))
+    # table pot
+    window.blit(table_pot, (440, 350))
+    # pot chips img
+    window.blit(chip_img, (405, 350))
+    # chip img draw
+    window.blit(chip_img, (515, 550))
+    window.blit(chip_img, (5, 220))
+    window.blit(chip_img, (505, 60))
+    window.blit(chip_img, (785, 220))
 
     # table cards
     coor = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]

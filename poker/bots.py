@@ -7,4 +7,5 @@ class Bot:
 class Table:
     def __init__(self):
         self.cards = []
+        self.pot = 0
 
