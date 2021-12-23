@@ -62,13 +62,15 @@ hide_card(bot3.hand[0])
 hide_card(bot3.hand[1])
 
 # font
+# main font
 pygame.init()
 font = pygame.font.Font('freesansbold.ttf', 24)
-player_text = font.render(player.name, True, (255, 255, 255))
-# TODO: give the bots random actual names somehow
+player_text = font.render(player.name, True, (255, 255, 255))   # player name
+# bots' names
 bot1_text = font.render("bot1", True, (255, 255, 255))
 bot2_text = font.render("bot2", True, (255, 255, 255))
 bot3_text = font.render("bot3", True, (255, 255, 255))
+
 # chips
 player_chips = font.render(f': {player.chips}', True, (255, 255, 255))
 bot1_chips = font.render(f': {bot1.chips}', True, (255, 255, 255))
@@ -76,6 +78,11 @@ bot2_chips = font.render(f': {bot2.chips}', True, (255, 255, 255))
 bot3_chips = font.render(f': {bot3.chips}', True, (255, 255, 255))
 table_pot = font.render(f': {table.pot}', True, (255, 255, 255))
 
+# button font
+button_font = pygame.font.Font("freesansbold.ttf", 16)
+BET_TEXT = button_font.render('BET', True, (207, 222, 227))
+PASS_TEXT = button_font.render('PASS', True, (207, 222, 227))
+FOLD_TEXT = button_font.render('FOLD', True, (207, 222, 227))
 
 # sound FX
 pygame.mixer.init()
@@ -106,6 +113,14 @@ while ...:
     window.blit(chip_img, (5, 220))
     window.blit(chip_img, (505, 60))
     window.blit(chip_img, (785, 220))
+
+    # buttons draw
+    pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30])    # bet button
+    window.blit(BET_TEXT, (660, 507))
+    pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30])     # pass button
+    window.blit(PASS_TEXT, (727, 507))
+    pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30])    # fold button
+    window.blit(FOLD_TEXT, (797, 507))
 
     # table cards
     coor = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
@@ -145,22 +160,21 @@ while ...:
             quit()
 
         # mouse events
-
         if event.type == pygame.MOUSEBUTTONDOWN:
-            # (380, 500) (420, 500)
-            # click on player's card 1
+            # animation when a player's card is clicked
+            # if the click is on player's card 1
             if 420 > pygame.mouse.get_pos()[0] > 380 and 600 > pygame.mouse.get_pos()[1] > 500:
                 card1_x, card1_y = 370, 490
                 card2_x, card2_y = 420, 500
                 card_FX.play()
 
-            # click on player's card 2
+            # if the click is on player's card 2
             elif 515 > pygame.mouse.get_pos()[0] > 420 and 600 > pygame.mouse.get_pos()[1] > 500:
                 card2_x, card2_y = 430, 490
                 card1_x, card1_y = 380, 500
                 card_FX.play()
 
-            # click outside a card
+            # if the click is outside a card
             else:
                 # make the card sound effect if one of player's card is out of place
                 if card1_x == 370 or card2_x == 430:
@@ -168,5 +182,22 @@ while ...:
                 card2_x, card2_y = 420, 500
                 card1_x, card1_y = 380, 500
 
+            # click at a button:
+            # (650, 500) -> button 1 (bet)
+            # (720, 500) -> button 2 (pass)
+            # (790, 500) -> button 3 (fold)
+            # (60, 30) -> buttons dimensions
+            # bet button clicked
+            if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
+                # bet function
+                pass
+            # pass button clicked
+            elif 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
+                # pass function
+                pass
+            # fold button clicked
+            elif 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
+                # fold function
+                pass
         # Draws the surface object to the screen.
         pygame.display.update()
