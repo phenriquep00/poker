@@ -3,10 +3,15 @@ class Player:
         self.hand = []
         self.chips = 500
         self.name = 'player'
+        self.small = True
+        self.action = True
 
-    def bet(self):
-        if self.chips > 0:
+    def bet(self, amount):
+        if self.chips == 0:
             pass
+        else:
+            self.chips -= amount
+        return amount
 
     def fold(self):
         pass
