@@ -5,7 +5,7 @@ import player
 import bots
 
 
-# function to rotate a image object around it's center
+# function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(topleft=topleft).center)
@@ -33,7 +33,7 @@ deck.shuffle()
 # chip img
 chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
 
-# Generate player object and setting it's card hand
+# Generate player object and setting its card hand
 player = player.Player()
 player.hand = deck.give_cards()
 
@@ -72,7 +72,7 @@ FOLD_TEXT = button_font.render('FOLD', True, (207, 222, 227))
 
 # sound FX
 pygame.mixer.init()
-card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))    # from freesound
+card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))    # from free sound
 
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
@@ -149,17 +149,17 @@ while ...:  # game loop
 
     # table cards
     if game_round == 2:
-        coor = [(200, 230), (300, 230), (400, 230)]
+        coordinates = [(200, 230), (300, 230), (400, 230)]
         for _ in range(3):
-            window.blit(table.cards[_].image, coor[_])
+            window.blit(table.cards[_].image, coordinates[_])
     elif game_round == 3:
-        coor = [(200, 230), (300, 230), (400, 230), (500, 230)]
+        coordinates = [(200, 230), (300, 230), (400, 230), (500, 230)]
         for _ in range(4):
-            window.blit(table.cards[_].image, coor[_])
+            window.blit(table.cards[_].image, coordinates[_])
     elif game_round >= 4:
-        coor = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
+        coordinates = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
         for _ in range(5):
-            window.blit(table.cards[_].image, coor[_])
+            window.blit(table.cards[_].image, coordinates[_])
 
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.
