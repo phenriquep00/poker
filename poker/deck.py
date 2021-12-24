@@ -37,7 +37,7 @@ class Deck:
 
 
 class Card:
-    # Each card will have a image attribute (from pics) and a value
+    # Each card will have an image attribute (from pics) and a value
     def __init__(self, image, value, suit):
         self.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{image}'))
         self.image_back = pygame.image.load(os.path.join('pics', 'card-back.png'))
