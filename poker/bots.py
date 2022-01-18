@@ -2,20 +2,19 @@ class Bot:
     def __init__(self):
         self.hand = []
         self.chips = 500
-        self.action = False
-        self.next = False
+        self.bet_chips = 0
 
     def do(self):
-        if self.action:
-            self.bet(40)
-            self.action = False
-            self.next = True
+        # TODO: analyse the table and the bot's chances to win, then, do the most valuable action.
+        amount = 40
+        self.bet(amount)
 
     def bet(self, amount):
         if self.chips == 0:
             pass
         else:
             self.chips -= amount
+            self.bet_chips = amount
         return amount
 
 

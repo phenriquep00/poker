@@ -16,12 +16,12 @@ def blit_rotate_center(surf, image, topleft, angle):
 # unused functions
 # function to flip the bots' cards backwards
 # def hide_card(card):
-    # card.image = pygame.image.load(os.path.join('pics', 'card-back.png'))
+# card.image = pygame.image.load(os.path.join('pics', 'card-back.png'))
 
 
 # function to flip the bots' cards to their front side
 # def show_card(card, value, suit):
-    # card.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{value}'))
+# card.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{value}'))
 
 
 X, Y = 901, 600
@@ -58,7 +58,7 @@ bot3.hand = deck.give_cards()
 # main font
 pygame.init()
 font = pygame.font.Font('freesansbold.ttf', 24)
-player_text = font.render(player.name, True, (255, 255, 255))   # player name
+player_text = font.render(player.name, True, (255, 255, 255))  # player name
 # bots' names
 bot1_text = font.render("bot1", True, (255, 255, 255))
 bot2_text = font.render("bot2", True, (255, 255, 255))
@@ -72,7 +72,7 @@ FOLD_TEXT = button_font.render('FOLD', True, (207, 222, 227))
 
 # sound FX
 pygame.mixer.init()
-card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))    # from free sound
+card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free sound
 
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
@@ -108,11 +108,11 @@ while ...:  # game loop
     window.blit(chip_img, (785, 220))
 
     # buttons draw
-    pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30])    # bet button
+    pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30])  # bet button
     window.blit(BET_TEXT, (660, 507))
-    pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30])     # pass button
+    pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30])  # pass button
     window.blit(PASS_TEXT, (727, 507))
-    pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30])    # fold button
+    pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30])  # fold button
     window.blit(FOLD_TEXT, (797, 507))
 
     # draw cards on the window
@@ -204,43 +204,68 @@ while ...:  # game loop
             # (790, 500) -> button 3 (fold)
             # (60, 30) -> buttons dimensions
             # bet button clicked
-            if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
-                # bet function
-                if game_round < 5:
-                    if player.action:
-                        if player.chips >= 1:
-                            if game_round == 0:
-                                player.bet(20)
-                                table.get_chips(20)
-                            else:
-                                # TODO: give the player a choice to select the amount of chips they will bet or to
-                                #  fold/pass
-                                player.bet(40)
-                                table.get_chips(40)
-                            player.action = False
-                            bot1.action = True
-                            # TODO: make bots see the chance they have to win and make a action accordingly
-                            bot1.do()
-                            table.get_chips(40)
+            while game_round < 5:
+                if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
+                    if game_round == 0:  # player starts the game by betting the small amount = 20
 
-                            if bot1.next:
-                                bot2.action = True
-                                bot2.do()
-                                table.get_chips(40)
+                        player.bet(20)
+                        # bot1 action
+                        bot1.do()
+                        # bot2 action
+                        bot2.do()
+                        # bot3 action
+                        bot3.do()
+                        # pass the game to the next round
+                        game_round += 1
+                        break
 
-                                bot3.action = True
-                                bot3.do()
-                                table.get_chips(40)
-                                player.action = True
-                                game_round += 1
+                    elif game_round == 1:  # at round 1, the player has to equal his amount of chips in the table
+                        # with the
+                        # bot's amount
+                        player.bet(20)
+                        # add the chips to the pot
+                        table.get_chips(player.bet_chips + bot1.bet_chips + bot2.bet_chips + bot2.bet_chips)
+                        # clear the chips at the table
+                        player.bet_chips = 0
+                        bot1.bet_chips = 0
+                        bot2.bet_chips = 0
+                        bot3.bet_chips = 0
+                        game_round += 1
+                        break
+
+                    elif game_round >= 2:  # After the first flop round, the game will follow this sequence: player
+                        # -> bot1
+                        # -> bot2 -> bot3 -> chips to pot -> next round
+                        player.bet(40)
+                        # bot1 action
+                        bot1.do()
+                        # bot2 action
+                        bot2.do()
+                        # bot3 action
+                        bot3.do()
+
+                        # add the chips to the pot
+                        table.get_chips(player.bet_chips + bot1.bet_chips + bot2.bet_chips + bot2.bet_chips)
+                        # clear the chips at the table
+                        player.bet_chips = 0
+                        bot1.bet_chips = 0
+                        bot2.bet_chips = 0
+                        bot3.bet_chips = 0
+                        game_round += 1
+                        break
+
             # pass button clicked
-            elif 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
-                # pass function
-                pass
+                elif 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
+                    # pass function
+                    if game_round < 2:
+                        # make the button unclickable
+                        pass
             # fold button clicked
-            elif 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
-                # fold function
-                player.fold()
+                elif 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
+                    # fold function
+                    if game_round < 2:
+                        # make the button unclickable
+                        pass
 
         # Draws the surface object to the screen.
         pygame.display.update()

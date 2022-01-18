@@ -2,8 +2,8 @@ class Player:
     def __init__(self):
         self.hand = []
         self.chips = 500
+        self.bet_chips = 0
         self.name = 'player'
-        self.small = True
         self.action = True
 
     def bet(self, amount):
@@ -11,6 +11,7 @@ class Player:
             pass
         else:
             self.chips -= amount
+            self.bet_chips = amount
         return amount
 
     def fold(self):
