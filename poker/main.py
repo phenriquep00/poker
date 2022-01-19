@@ -13,22 +13,19 @@ def blit_rotate_center(surf, image, topleft, angle):
     surf.blit(rotated_image, new_rect)
 
 
-# unused functions
-# function to flip the bots' cards backwards
-# def hide_card(card):
-# card.image = pygame.image.load(os.path.join('pics', 'card-back.png'))
+def hand_value(obj, tbl):
+    all_suits = [_ for _ in tbl.cards]
+    all_suits.append(obj.cards[0])
+    all_suits.append(obj.card[1])
 
 
-# function to flip the bots' cards to their front side
-# def show_card(card, value, suit):
-# card.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{value}'))
-
-
+clock = pygame.time.Clock()
 X, Y = 901, 600
 card1_x, card1_y, card2_x, card2_y = 380, 500, 420, 500
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
+
 
 # chip img
 chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
@@ -69,10 +66,11 @@ button_font = pygame.font.Font("freesansbold.ttf", 16)
 BET_TEXT = button_font.render('BET', True, (207, 222, 227))
 PASS_TEXT = button_font.render('PASS', True, (207, 222, 227))
 FOLD_TEXT = button_font.render('FOLD', True, (207, 222, 227))
-
+OK_TEXT = button_font.render('OK', True, (207, 222, 227))
 # sound FX
 pygame.mixer.init()
 card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free sound
+
 
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
@@ -114,6 +112,9 @@ while ...:  # game loop
     window.blit(PASS_TEXT, (727, 507))
     pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30])  # fold button
     window.blit(FOLD_TEXT, (797, 507))
+    # ok button
+    # pygame.draw.rect(window, (25, 105, 123), [0, 0, 60, 30])  # bet button
+    # window.blit(OK_TEXT, (0, 0))
 
     # draw cards on the window
     # player's cards
@@ -135,6 +136,7 @@ while ...:  # game loop
         blit_rotate_center(window, bot3.hand[1].image_back, (811, 280), 90)
 
     else:
+        # bot1
         blit_rotate_center(window, bot1.hand[0].image, (0, 240), 90)
         blit_rotate_center(window, bot1.hand[1].image, (0, 280), 90)
 
@@ -146,6 +148,8 @@ while ...:  # game loop
         blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
         blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
         # TODO: look who won the round, give the pot to them, pass small/big bet and continue the game
+
+
 
     # table cards
     if game_round == 2:
@@ -204,8 +208,9 @@ while ...:  # game loop
             # (790, 500) -> button 3 (fold)
             # (60, 30) -> buttons dimensions
             # bet button clicked
-            while game_round < 5:
-                if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
+            if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
+                while game_round < 5:
+
                     if game_round == 0:  # player starts the game by betting the small amount = 20
 
                         player.bet(20)
@@ -236,7 +241,8 @@ while ...:  # game loop
                     elif game_round >= 2:  # After the first flop round, the game will follow this sequence: player
                         # -> bot1
                         # -> bot2 -> bot3 -> chips to pot -> next round
-                        player.bet(40)
+                        # TODO: today: give the player the choice to bet a specific amount
+
                         # bot1 action
                         bot1.do()
                         # bot2 action
@@ -255,17 +261,19 @@ while ...:  # game loop
                         break
 
             # pass button clicked
-                elif 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
+                if 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
                     # pass function
                     if game_round < 2:
                         # make the button unclickable
                         pass
             # fold button clicked
-                elif 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
+                if 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
                     # fold function
                     if game_round < 2:
                         # make the button unclickable
                         pass
 
         # Draws the surface object to the screen.
-        pygame.display.update()
+        # pygame.display.update()
+        pygame.display.flip()
+        clock.tick(30)
