@@ -3,6 +3,7 @@ import pygame
 import deck
 import player
 import bots
+import hand_value
 
 
 # function to rotate an image object around it's center
@@ -13,19 +14,12 @@ def blit_rotate_center(surf, image, topleft, angle):
     surf.blit(rotated_image, new_rect)
 
 
-def hand_value(obj, tbl):
-    all_suits = [_ for _ in tbl.cards]
-    all_suits.append(obj.cards[0])
-    all_suits.append(obj.card[1])
-
-
 clock = pygame.time.Clock()
 X, Y = 901, 600
 card1_x, card1_y, card2_x, card2_y = 380, 500, 420, 500
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 deck = deck.Deck()
 deck.shuffle()
-
 
 # chip img
 chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
@@ -70,7 +64,6 @@ OK_TEXT = button_font.render('OK', True, (207, 222, 227))
 # sound FX
 pygame.mixer.init()
 card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free sound
-
 
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
@@ -147,9 +140,34 @@ while ...:  # game loop
         # bot3
         blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
         blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
-        # TODO: look who won the round, give the pot to them, pass small/big bet and continue the game
+        # TODO: if there is more than 1 person with two pair, give priority to the one with the highest pairs
+        # get the hands values
+        player.value = hand_value.hand_value(player, table)
+        bot1.value = hand_value.hand_value(bot1, table)
+        bot2.value = hand_value.hand_value(bot2, table)
+        bot3.value = hand_value.hand_value(bot3, table)
+        rankings = {'royal flush': 1, 'straight flush': 2, 'four of a kind': 3, 'full house': 4, 'flush': 5,
+                    'straight': 6, 'three of a kind': 6, 'two pair': 8, 'pair': 9, 'high card 14': 10,
+                    'high card 13': 11, 'high card 12': 12, 'high card 11': 13, 'high card 10': 14, 'high card 9': 15,
+                    'high card 8': 16, 'high card 7': 17, 'high card 6': 18, 'high card 5': 19, 'high card 4': 20,
+                    'high card 3': 21, 'high card 2': 22, }
 
+        for _ in [player, bot1, bot2, bot3]:
+            for rank, value in rankings.items():
+                if _.value == rank:
+                    _.rank = value
 
+        winner = 23
+        for _ in [player.rank, bot1.rank, bot2.rank, bot2.rank]:
+            if _ < winner:
+                winner = _
+
+        for _ in [player, bot1, bot2, bot2]:
+            if _.rank == winner:
+                _.win = True
+                _.chips += table.pot
+                table.pot = 0
+                _.win = False
 
     # table cards
     if game_round == 2:
@@ -242,7 +260,7 @@ while ...:  # game loop
                         # -> bot1
                         # -> bot2 -> bot3 -> chips to pot -> next round
                         # TODO: today: give the player the choice to bet a specific amount
-
+                        player.bet(40)
                         # bot1 action
                         bot1.do()
                         # bot2 action
@@ -260,13 +278,13 @@ while ...:  # game loop
                         game_round += 1
                         break
 
-            # pass button clicked
+                # pass button clicked
                 if 780 > pygame.mouse.get_pos()[0] > 720 and 530 > pygame.mouse.get_pos()[1] > 500:
                     # pass function
                     if game_round < 2:
                         # make the button unclickable
                         pass
-            # fold button clicked
+                # fold button clicked
                 if 850 > pygame.mouse.get_pos()[0] > 790 and 530 > pygame.mouse.get_pos()[1] > 500:
                     # fold function
                     if game_round < 2:

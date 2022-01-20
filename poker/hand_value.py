@@ -34,11 +34,6 @@ def hand_value(obj, tbl):
         else:
             s.append(_)
 
-    print(c)
-    print(d)
-    print(h)
-    print(s)
-
     # check for flush possibilities:
     for _ in [c, d, h, s]:
         if len(_) >= 5:  # if True, mean there is at least a flush
@@ -67,7 +62,7 @@ def hand_value(obj, tbl):
                 pairs.append(k)
 
     if len(pairs) > 0:  # there is at least one pair
-        if len(pairs) == 2:  # there is a two pair
+        if len(pairs) >= 2:  # there is a two pair
             return 'two pair'
         elif len(pairs) == 1 and len(three) == 1:  # there is a full house:
             return 'full house'
@@ -87,7 +82,7 @@ def hand_value(obj, tbl):
         if (_[0] + 1) == _[1] and (_[1] + 1) == _[2] and (_[2] + 1) == _[3] and (_[3] + 1) == _[4]:
             return 'straight'
         else:
-            return 'high card'
+            return f'high card {sorted(final_values)[-1]}'
 
 
 if __name__ == '__main__':

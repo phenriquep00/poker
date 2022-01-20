@@ -3,6 +3,9 @@ class Bot:
         self.hand = []
         self.chips = 500
         self.bet_chips = 0
+        self.value = ''
+        self.rank = 0
+        self.win = False
 
     def do(self):
         # TODO: analyse the table and the bot's chances to win, then, do the most valuable action.

@@ -5,6 +5,9 @@ class Player:
         self.bet_chips = 0
         self.name = 'player'
         self.action = True
+        self.rank = 0
+        self.value = ''
+        self.win = False
 
     def bet(self, amount):
         if self.chips == 0:
