@@ -70,7 +70,7 @@ game_round = 0  # variable do control current game round
 while ...:  # game loop
     # completely fill the surface object
     window.blit(bg, (0, 0))
-    # chips
+    # render chips image
     player_chips = font.render(f': {player.chips}', True, (255, 255, 255))
     bot1_chips = font.render(f': {bot1.chips}', True, (255, 255, 255))
     bot2_chips = font.render(f': {bot2.chips}', True, (255, 255, 255))
@@ -98,7 +98,7 @@ while ...:  # game loop
     window.blit(chip_img, (505, 60))
     window.blit(chip_img, (785, 220))
 
-    # buttons draw
+    # buttons draw on screen
     pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30])  # bet button
     window.blit(BET_TEXT, (660, 507))
     pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30])  # pass button
@@ -115,8 +115,8 @@ while ...:  # game loop
     window.blit(player.hand[1].image, (card2_x, card2_y))
 
     # bots' cards
-    # bot1
     if game_round < 5:
+        # bot1
         blit_rotate_center(window, bot1.hand[0].image_back, (0, 240), 90)
         blit_rotate_center(window, bot1.hand[1].image_back, (0, 280), 90)
 
