@@ -6,6 +6,8 @@ import bots
 import hand_value
 
 
+# TODO: animate when a bet is made, with image moving and soundFX
+
 # function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
     rotated_image = pygame.transform.rotate(image, angle)
@@ -204,19 +206,19 @@ while ...:  # game loop
             if 420 > pygame.mouse.get_pos()[0] > 380 and 600 > pygame.mouse.get_pos()[1] > 500:
                 card1_x, card1_y = 370, 490
                 card2_x, card2_y = 420, 500
-                card_FX.play()
+                card_FX.play()  # play sound when a card is clicked
 
             # if the click is on player's card 2
             elif 515 > pygame.mouse.get_pos()[0] > 420 and 600 > pygame.mouse.get_pos()[1] > 500:
                 card2_x, card2_y = 430, 490
                 card1_x, card1_y = 380, 500
-                card_FX.play()
+                card_FX.play()  # play sound when a card is clicked
 
             # if the click is outside a card
             else:
                 # make the card sound effect if one of player's card is out of place
                 if card1_x == 370 or card2_x == 430:
-                    card_FX.play()
+                    card_FX.play()  # play sound when a card is clicked
                 card2_x, card2_y = 420, 500
                 card1_x, card1_y = 380, 500
 
@@ -259,9 +261,10 @@ while ...:  # game loop
                     elif game_round >= 2:  # After the first flop round, the game will follow this sequence: player
                         # -> bot1
                         # -> bot2 -> bot3 -> chips to pot -> next round
-                        # TODO: today: give the player the choice to bet a specific amount
+                        # TODO:  give the player the choice to bet a specific amount
                         player.bet(40)
                         # bot1 action
+                        # TODO:  MAKE THE BOTS LESS DUMB
                         bot1.do()
                         # bot2 action
                         bot2.do()
