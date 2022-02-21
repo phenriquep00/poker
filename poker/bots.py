@@ -1,7 +1,8 @@
 class Bot:
-    def __init__(self):
+    def __init__(self, name):
         self.hand = []
         self.chips = 500
+        self.name = name
         self.bet_chips = 0
         self.value = ''
         self.rank = 0
@@ -9,6 +10,7 @@ class Bot:
 
     def do(self):
         # TODO: analyse the table and the bot's chances to win, then, do the most valuable action.
+        # TODO: every time a bot make a bet, use the bet_animate function to animate it
         amount = 40
         self.bet(amount)
 
@@ -19,6 +21,7 @@ class Bot:
             self.chips -= amount
             self.bet_chips = amount
         return amount
+
 
 
 class Table:

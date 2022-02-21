@@ -6,14 +6,17 @@ import bots
 import hand_value
 
 
-# TODO: animate when a bet is made, with image moving and soundFX
-
 # function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(topleft=topleft).center)
 
     surf.blit(rotated_image, new_rect)
+
+
+def bet_menu(max_chips):
+    # TODO: create a menu for the player to chose a specific amount of chips to bet
+    pass
 
 
 clock = pygame.time.Clock()
@@ -27,7 +30,7 @@ deck.shuffle()
 chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
 
 # Generate player object and setting its card hand
-player = player.Player()
+player = player.Player(name='player')
 player.hand = deck.give_cards()
 
 # Generate table object
@@ -36,15 +39,15 @@ table.cards = deck.give_table_cards()
 
 # Generate bot object
 # bot1
-bot1 = bots.Bot()
+bot1 = bots.Bot(name='bot1')
 bot1.hand = deck.give_cards()
 
 # bot2
-bot2 = bots.Bot()
+bot2 = bots.Bot(name='bot2')
 bot2.hand = deck.give_cards()
 
 # bot3
-bot3 = bots.Bot()
+bot3 = bots.Bot(name='bot3')
 bot3.hand = deck.give_cards()
 
 # font
@@ -142,34 +145,45 @@ while ...:  # game loop
         # bot3
         blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
         blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
-        # TODO: if there is more than 1 person with two pair, give priority to the one with the highest pairs
-        # get the hands values
+        # TODO: if there is more than 1 person with two pair or if the game is decided only with high cards,
+        #  give priority to the one with the highest pairs get the hands values
         player.value = hand_value.hand_value(player, table)
         bot1.value = hand_value.hand_value(bot1, table)
         bot2.value = hand_value.hand_value(bot2, table)
         bot3.value = hand_value.hand_value(bot3, table)
+
         rankings = {'royal flush': 1, 'straight flush': 2, 'four of a kind': 3, 'full house': 4, 'flush': 5,
                     'straight': 6, 'three of a kind': 6, 'two pair': 8, 'pair': 9, 'high card 14': 10,
                     'high card 13': 11, 'high card 12': 12, 'high card 11': 13, 'high card 10': 14, 'high card 9': 15,
                     'high card 8': 16, 'high card 7': 17, 'high card 6': 18, 'high card 5': 19, 'high card 4': 20,
-                    'high card 3': 21, 'high card 2': 22, }
+                    'high card 3': 21, 'high card 2': 22}
 
         for _ in [player, bot1, bot2, bot3]:
             for rank, value in rankings.items():
                 if _.value == rank:
                     _.rank = value
 
-        winner = 23
+        winner_value = 23
         for _ in [player.rank, bot1.rank, bot2.rank, bot2.rank]:
-            if _ < winner:
-                winner = _
+            if _ < winner_value:
+                winner_value = _
 
         for _ in [player, bot1, bot2, bot2]:
-            if _.rank == winner:
+            if _.rank == winner_value:
                 _.win = True
                 _.chips += table.pot
                 table.pot = 0
                 _.win = False
+                winner_text = font.render(f'winner: {_.name} with {_.value}', True, (255, 255, 255))
+                player_value_text = font.render(f'rank: {player.value}', True, (255, 255, 255))
+                bot1_value_text = font.render(f'rank: {bot1.value}', True, (255, 255, 255))
+                bot2_value_text = font.render(f'rank: {bot2.value}', True, (255, 255, 255))
+                bot3_value_text = font.render(f'rank: {bot3.value}', True, (255, 255, 255))
+                window.blit(winner_text, (320, 200))
+                window.blit(player_value_text, (130, 500))
+                window.blit(bot1_value_text, (0, 370))
+                window.blit(bot2_value_text, (100, 0))
+                window.blit(bot3_value_text, (650, 370))
 
     # table cards
     if game_round == 2:
