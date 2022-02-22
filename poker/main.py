@@ -1,9 +1,12 @@
 import os
+
 import pygame
-import deck
-import player
+
 import bots
+import deck
 import hand_value
+import player
+import functions
 
 
 # function to rotate an image object around it's center
@@ -72,6 +75,9 @@ card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free so
 
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
+
+slider = functions.Slider(400, 200, 200, 20, screen=window)
+
 while ...:  # game loop
     # completely fill the surface object
     window.blit(bg, (0, 0))
@@ -118,6 +124,8 @@ while ...:  # game loop
     # player's cards
     window.blit(player.hand[0].image, (card1_x, card1_y))
     window.blit(player.hand[1].image, (card2_x, card2_y))
+
+    slider.draw(window)
 
     # bots' cards
     if game_round < 5:
@@ -307,6 +315,12 @@ while ...:  # game loop
                     if game_round < 2:
                         # make the button unclickable
                         pass
+
+            if slider.on_slider(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                slider.handle_event(window, pygame.mouse.get_pos()[0])
+
+                # Instead of filling the entire screen, draw a rect over the old slider before creating the new one
+                window.fill((0, 0, 0))
 
         # Draws the surface object to the screen.
         # pygame.display.update()
