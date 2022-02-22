@@ -316,11 +316,13 @@ while ...:  # game loop
                         # make the button unclickable
                         pass
 
-            if slider.on_slider(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-                slider.handle_event(window, pygame.mouse.get_pos()[0])
+            # slider?
 
-                # Instead of filling the entire screen, draw a rect over the old slider before creating the new one
-                window.fill((0, 0, 0))
+            # if slider.on_slider(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+            #     slider.handle_event(window, pygame.mouse.get_pos()[0])
+            #
+            #     # Instead of filling the entire screen, draw a rect over the old slider before creating the new one
+            #     window.fill((0, 0, 0))
 
         # Draws the surface object to the screen.
         # pygame.display.update()
