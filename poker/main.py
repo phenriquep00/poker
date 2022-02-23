@@ -115,12 +115,12 @@ while ...:  # game loop
     window.blit(chip_img, (785, 220))
 
     # buttons draw on screen
-    pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30])  # bet button
-    window.blit(BET_TEXT, (660, 507))
-    pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30])  # pass button
-    window.blit(PASS_TEXT, (727, 507))
-    pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30])  # fold button
-    window.blit(FOLD_TEXT, (797, 507))
+    pygame.draw.rect(window, (25, 105, 123), [650, 500, 60, 30], border_radius=20)  # bet button
+    window.blit(BET_TEXT, (662, 507))
+    pygame.draw.rect(window, (25, 56, 125), [720, 500, 60, 30], border_radius=20)  # pass button
+    window.blit(PASS_TEXT, (729, 507))
+    pygame.draw.rect(window, (25, 135, 123), [790, 500, 60, 30], border_radius=20)  # fold button
+    window.blit(FOLD_TEXT, (799, 507))
     # ok button
     # pygame.draw.rect(window, (25, 105, 123), [0, 0, 60, 30])  # bet button
     # window.blit(OK_TEXT, (0, 0))

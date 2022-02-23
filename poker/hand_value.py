@@ -45,7 +45,7 @@ def hand_value(obj, tbl):
             else:
                 return 'flush'
 
-    # check for value maching possibilities:
+    # check for value matching possibilities:
     pairs = []
     three = []
     four = []
@@ -86,7 +86,7 @@ def hand_value(obj, tbl):
 
 
 if __name__ == '__main__':
-    player = player.Player()
+    player = player.Player(name='teste')
     deck = deck.Deck()
     deck.shuffle()
     player.hand = deck.give_cards()

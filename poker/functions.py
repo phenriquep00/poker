@@ -4,7 +4,7 @@ import pygame as pg
 class Slider:
     def __init__(self, x, y, w, h):
         self.circle_x = x
-        self.volume = 0
+        self.value = 0
         self.sliderRect = pg.Rect(x, y, w, h)
 
     def draw(self, screen):
@@ -13,18 +13,18 @@ class Slider:
                        self.sliderRect.h * 1.5)
 
     def get_value(self):
-        return self.volume
+        return self.value
 
-    def set_volume(self, num):
-        self.volume = num
+    def set_value(self, num):
+        self.value = num
 
-    def update_volume(self, x):
+    def update_value(self, x):
         if x < self.sliderRect.x:
-            self.volume = 0
+            self.value = 0
         elif x > self.sliderRect.x + self.sliderRect.w:
-            self.volume = 100
+            self.value = 100
         else:
-            self.volume = int((x - self.sliderRect.x) / float(self.sliderRect.w) * 100)
+            self.value = int((x - self.sliderRect.x) / float(self.sliderRect.w) * 100)
 
     def on_slider(self, x, y):
         if self.on_slider_hold(x, y) or self.sliderRect.x <= x <= self.sliderRect.x + self.sliderRect.w and \
@@ -49,8 +49,7 @@ class Slider:
         else:
             self.circle_x = x
         self.draw(screen)
-        self.update_volume(x)
-        print(self.volume)
+        self.update_value(x)
 
 # def bet_animate(window, original_pos):
 #     # TODO: create a chip image and moveit from the punter's chips to the bet chip img at (405, 350)
