@@ -17,15 +17,18 @@ def blit_rotate_center(surf, image, topleft, angle):
     surf.blit(rotated_image, new_rect)
 
 
-def bet_menu(max_chips):
-    # TODO: create a menu for the player to chose a specific amount of chips to bet
-    pass
+def get_from_slider(sld, total_chips):
+    percentage = sld.get_value()
+    total_amount = total_chips
+
+    return int(total_amount * (percentage/100))
 
 
 clock = pygame.time.Clock()
 X, Y = 901, 600
 card1_x, card1_y, card2_x, card2_y = 380, 500, 420, 500
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
+sld_cover = pygame.image.load(os.path.join('pics', 'slider-cover.png'))
 deck = deck.Deck()
 deck.shuffle()
 
@@ -76,8 +79,10 @@ card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free so
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
 
-slider = functions.Slider(400, 200, 200, 20, screen=window)
+slider = functions.Slider(650, 477, 150, 8)
+value = button_font.render('0', True, (207, 222, 227))
 
+call_betmenu = False
 while ...:  # game loop
     # completely fill the surface object
     window.blit(bg, (0, 0))
@@ -125,8 +130,6 @@ while ...:  # game loop
     window.blit(player.hand[0].image, (card1_x, card1_y))
     window.blit(player.hand[1].image, (card2_x, card2_y))
 
-    slider.draw(window)
-
     # bots' cards
     if game_round < 5:
         # bot1
@@ -142,6 +145,8 @@ while ...:  # game loop
         blit_rotate_center(window, bot3.hand[1].image_back, (811, 280), 90)
 
     else:
+        call_betmenu = False
+
         # bot1
         blit_rotate_center(window, bot1.hand[0].image, (0, 240), 90)
         blit_rotate_center(window, bot1.hand[1].image, (0, 280), 90)
@@ -198,6 +203,7 @@ while ...:  # game loop
         coordinates = [(200, 230), (300, 230), (400, 230)]
         for _ in range(3):
             window.blit(table.cards[_].image, coordinates[_])
+        call_betmenu = True
     elif game_round == 3:
         coordinates = [(200, 230), (300, 230), (400, 230), (500, 230)]
         for _ in range(4):
@@ -206,6 +212,12 @@ while ...:  # game loop
         coordinates = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
         for _ in range(5):
             window.blit(table.cards[_].image, coordinates[_])
+
+    # menu to give the player a choice of chip amount
+    if call_betmenu:
+        slider.draw(window)
+        pygame.draw.rect(window, (25, 67, 123), [810, 466, 60, 30])
+        window.blit(value, (815, 471))
 
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.
@@ -280,11 +292,12 @@ while ...:  # game loop
                         game_round += 1
                         break
 
-                    elif game_round >= 2:  # After the first flop round, the game will follow this sequence: player
+                    elif game_round >= 1:  # After the first flop round, the game will follow this sequence: player
                         # -> bot1
                         # -> bot2 -> bot3 -> chips to pot -> next round
-                        # TODO:  give the player the choice to bet a specific amount
-                        player.bet(40)
+                        # TODO:  optmize the bet menu
+
+                        player.bet(get_from_slider(slider, player.chips))
                         # bot1 action
                         # TODO:  MAKE THE BOTS LESS DUMB
                         bot1.do()
@@ -318,11 +331,11 @@ while ...:  # game loop
 
             # slider?
 
-            # if slider.on_slider(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-            #     slider.handle_event(window, pygame.mouse.get_pos()[0])
-            #
-            #     # Instead of filling the entire screen, draw a rect over the old slider before creating the new one
-            #     window.fill((0, 0, 0))
+            if slider.on_slider(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                slider.handle_event(window, pygame.mouse.get_pos()[0])
+                value = button_font.render(f'{get_from_slider(slider, player.chips)}', True, (207, 222, 227))
+
+                window.blit(sld_cover, (630, 449))
 
         # Draws the surface object to the screen.
         # pygame.display.update()
