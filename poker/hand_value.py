@@ -4,6 +4,14 @@ import player
 import bots
 
 
+def higher_not_in_pair(cards, pairs):
+    higher_cards_not_in_pair = ''
+    for _ in cards:
+        if _ not in pairs:
+            higher_cards_not_in_pair = _
+    return higher_cards_not_in_pair
+
+
 def hand_value(obj, tbl):
     final = []
     final_suits = []
@@ -20,6 +28,9 @@ def hand_value(obj, tbl):
     sorted(final)
     sorted(final_values)
     sorted(final_suits)
+
+    higher_cards = [final[0][1], final[1][1], final[2][1], final[3][1], final[4][1], final[5][1], final[6][1]]
+    higher_cards = sorted(higher_cards[2:])
 
     # organize by suit
     c, d, h, s = [], [], [], []
@@ -63,12 +74,19 @@ def hand_value(obj, tbl):
 
     if len(pairs) > 0:  # there is at least one pair
         if len(pairs) >= 2:  # there is a two pair
-            return 'two pair'
+            # get the higher card that is not inside the pairs list
+            higher_cards_not_in_pair = higher_not_in_pair(higher_cards, pairs)
+
+            return [f'two pair', [pairs[0], pairs[0], pairs[1], pairs[1], higher_cards_not_in_pair]]
+
         elif len(pairs) == 1 and len(three) == 1:  # there is a full house:
             return 'full house'
 
     if len(pairs) == 1:
-        return 'pair'
+        if pairs[0] in higher_cards:
+            return [f'pair', higher_cards]
+        elif pairs[0] not in higher_cards:
+            return [f'pair', [pairs[0], pairs[0], higher_cards[2], higher_cards[3], higher_cards[4]]]
     if len(three) == 1:  # there is at least a three of a kind
         return 'three of a kind'
     if len(four) == 1:  # there is a four of a kind
@@ -82,7 +100,7 @@ def hand_value(obj, tbl):
         if (_[0] + 1) == _[1] and (_[1] + 1) == _[2] and (_[2] + 1) == _[3] and (_[3] + 1) == _[4]:
             return 'straight'
         else:
-            return f'high card {sorted(final_values)[-1]}'
+            return [f'high card {sorted(final_values)[-1]}', [higher_cards]]
 
 
 if __name__ == '__main__':
@@ -93,5 +111,5 @@ if __name__ == '__main__':
 
     table = bots.Table()
     table.cards = deck.give_table_cards()
-
     print(hand_value(obj=player, tbl=table))
+

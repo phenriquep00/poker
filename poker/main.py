@@ -8,6 +8,8 @@ import hand_value
 import player
 import functions
 
+# TODO: fix the order of things happening in the circle of betting
+
 
 # function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
@@ -158,12 +160,40 @@ while ...:  # game loop
         # bot3
         blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
         blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
-        # TODO: if there is more than 1 person with two pair or if the game is decided only with high cards,
-        #  give priority to the one with the highest pairs get the hands values
-        player.value = hand_value.hand_value(player, table)
-        bot1.value = hand_value.hand_value(bot1, table)
-        bot2.value = hand_value.hand_value(bot2, table)
-        bot3.value = hand_value.hand_value(bot3, table)
+
+        if hand_value.hand_value(player, table)[0].startswith('pair') or \
+                hand_value.hand_value(player, table)[0].startswith('two pair') or \
+                hand_value.hand_value(bot1, table)[0].startswith('high card'):
+            # fill the .undraw attribute of the object with  the list coming from the hand_value functions
+            # in order to give the win to the object with the highest pair
+            player.value = hand_value.hand_value(player, table)[0]
+            player.undraw = hand_value.hand_value(player, table)[1]
+        else:
+            player.value = hand_value.hand_value(player, table)
+
+        if hand_value.hand_value(bot1, table)[0].startswith('pair') or \
+                hand_value.hand_value(bot1, table)[0].startswith('two pair') or \
+                hand_value.hand_value(bot1, table)[0].startswith('high card'):
+            bot1.value = hand_value.hand_value(bot1, table)[0]
+            bot1.undraw = hand_value.hand_value(bot1, table)[1]
+        else:
+            bot1.value = hand_value.hand_value(bot1, table)
+
+        if hand_value.hand_value(bot2, table)[0].startswith('pair') or \
+                hand_value.hand_value(bot2, table)[0].startswith('two pair') or \
+                hand_value.hand_value(bot2, table)[0].startswith('high card'):
+            bot2.value = hand_value.hand_value(bot2, table)[0]
+            bot2.undraw = hand_value.hand_value(bot2, table)[1]
+        else:
+            bot2.value = hand_value.hand_value(bot2, table)
+
+        if hand_value.hand_value(bot3, table)[0].startswith('pair') or \
+                hand_value.hand_value(bot3, table)[0].startswith('two pair') or \
+                hand_value.hand_value(bot3, table)[0].startswith('high card'):
+            bot3.value = hand_value.hand_value(bot3, table)[0]
+            bot3.undraw = hand_value.hand_value(bot3, table)[1]
+        else:
+            bot3.value = hand_value.hand_value(bot3, table)
 
         rankings = {'royal flush': 1, 'straight flush': 2, 'four of a kind': 3, 'full house': 4, 'flush': 5,
                     'straight': 6, 'three of a kind': 6, 'two pair': 8, 'pair': 9, 'high card 14': 10,
@@ -181,9 +211,22 @@ while ...:  # game loop
             if _ < winner_value:
                 winner_value = _
 
-        for _ in [player, bot1, bot2, bot2]:
-            if _.rank == winner_value:
-                _.win = True
+        winner = [_ for _ in [player, bot1, bot2, bot3] if _.rank == winner_value]
+
+        if len(winner) > 1:
+            higher = 0
+            for _ in winner:
+                if sum(_.undraw) > higher:
+                    higher = sum(_.undraw)
+            for _ in [player, bot1, bot2, bot3]:
+                if sum(_.undraw) == higher:
+                    _.win = True
+
+        else:
+            winner[0].win = True
+
+        for _ in [player, bot1, bot2, bot3]:
+            if _.win:
                 _.chips += table.pot
                 table.pot = 0
                 _.win = False

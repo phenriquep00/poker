@@ -7,6 +7,7 @@ class Player:
         self.action = True
         self.rank = 0
         self.value = ''
+        self.undraw = list()
         self.win = False
 
     def bet(self, amount):

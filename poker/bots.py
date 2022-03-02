@@ -5,6 +5,7 @@ class Bot:
         self.name = name
         self.bet_chips = 0
         self.value = ''
+        self.undraw = list()
         self.rank = 0
         self.win = False
 
