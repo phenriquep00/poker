@@ -163,7 +163,9 @@ while ...:  # game loop
 
         if hand_value.hand_value(player, table)[0].startswith('pair') or \
                 hand_value.hand_value(player, table)[0].startswith('two pair') or \
-                hand_value.hand_value(bot1, table)[0].startswith('high card'):
+                hand_value.hand_value(player, table)[0].startswith('high card') or \
+                hand_value.hand_value(player, table)[0].startswith('straight') or \
+                hand_value.hand_value(player, table)[0].startswith('flush'):
             # fill the .undraw attribute of the object with  the list coming from the hand_value functions
             # in order to give the win to the object with the highest pair
             player.value = hand_value.hand_value(player, table)[0]
@@ -173,7 +175,9 @@ while ...:  # game loop
 
         if hand_value.hand_value(bot1, table)[0].startswith('pair') or \
                 hand_value.hand_value(bot1, table)[0].startswith('two pair') or \
-                hand_value.hand_value(bot1, table)[0].startswith('high card'):
+                hand_value.hand_value(bot1, table)[0].startswith('high card') or \
+                hand_value.hand_value(bot1, table)[0].startswith('straight') or \
+                hand_value.hand_value(bot1, table)[0].startswith('flush'):
             bot1.value = hand_value.hand_value(bot1, table)[0]
             bot1.undraw = hand_value.hand_value(bot1, table)[1]
         else:
@@ -181,7 +185,9 @@ while ...:  # game loop
 
         if hand_value.hand_value(bot2, table)[0].startswith('pair') or \
                 hand_value.hand_value(bot2, table)[0].startswith('two pair') or \
-                hand_value.hand_value(bot2, table)[0].startswith('high card'):
+                hand_value.hand_value(bot2, table)[0].startswith('high card') or \
+                hand_value.hand_value(bot2, table)[0].startswith('straight') or \
+                hand_value.hand_value(bot2, table)[0].startswith('flush'):
             bot2.value = hand_value.hand_value(bot2, table)[0]
             bot2.undraw = hand_value.hand_value(bot2, table)[1]
         else:
@@ -189,7 +195,9 @@ while ...:  # game loop
 
         if hand_value.hand_value(bot3, table)[0].startswith('pair') or \
                 hand_value.hand_value(bot3, table)[0].startswith('two pair') or \
-                hand_value.hand_value(bot3, table)[0].startswith('high card'):
+                hand_value.hand_value(bot3, table)[0].startswith('high card') or \
+                hand_value.hand_value(bot3, table)[0].startswith('straight') or \
+                hand_value.hand_value(bot3, table)[0].startswith('flush'):
             bot3.value = hand_value.hand_value(bot3, table)[0]
             bot3.undraw = hand_value.hand_value(bot3, table)[1]
         else:
@@ -207,7 +215,7 @@ while ...:  # game loop
                     _.rank = value
 
         winner_value = 23
-        for _ in [player.rank, bot1.rank, bot2.rank, bot2.rank]:
+        for _ in [player.rank, bot1.rank, bot2.rank, bot3.rank]:
             if _ < winner_value:
                 winner_value = _
 
@@ -217,14 +225,15 @@ while ...:  # game loop
             higher = 0
             for _ in winner:
                 if sum(_.undraw) > higher:
-                    higher = sum(_.undraw)
-            for _ in [player, bot1, bot2, bot3]:
-                if sum(_.undraw) == higher:
+                    higher = sum(_.undraw)  # bug: sometimes multiple winner with pair in the table
+            for _ in winner:
+                if sum(_.undraw) == higher:     # fixed: sometimes type error when betting with custom value TypeError
                     _.win = True
 
         else:
             winner[0].win = True
 
+        # WHY PLAYER ALWAYS GETS 960 WHEN WINNING?
         for _ in [player, bot1, bot2, bot3]:
             if _.win:
                 _.chips += table.pot
@@ -319,6 +328,12 @@ while ...:  # game loop
                         bot3.do()
                         # pass the game to the next round
                         game_round += 1
+                        table.get_chips(player.bet_chips + bot1.bet_chips + bot2.bet_chips + bot2.bet_chips)
+                        # clear the chips at the table
+                        player.bet_chips = 0
+                        bot1.bet_chips = 0
+                        bot2.bet_chips = 0
+                        bot3.bet_chips = 0
                         break
 
                     elif game_round == 1:  # at round 1, the player has to equal his amount of chips in the table

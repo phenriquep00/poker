@@ -52,9 +52,9 @@ def hand_value(obj, tbl):
                 if _[0][1] == 10:  # Jackpot!!! there is a royal flush
                     return 'royal flush'
                 else:
-                    return 'straight flush'
+                    return ['straight flush', _]
             else:
-                return 'flush'
+                return ['flush', _]
 
     # check for value matching possibilities:
     pairs = []
@@ -98,7 +98,8 @@ def hand_value(obj, tbl):
     a3 = [_ for _ in sorted(final_values)[2:7]]
     for _ in [a1, a2, a3]:
         if (_[0] + 1) == _[1] and (_[1] + 1) == _[2] and (_[2] + 1) == _[3] and (_[3] + 1) == _[4]:
-            return 'straight'
+            # TODO: might not me working properly
+            return ['straight', _]
         else:
             return [f'high card {sorted(final_values)[-1]}', [higher_cards]]
 
