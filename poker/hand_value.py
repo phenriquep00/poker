@@ -98,18 +98,29 @@ def hand_value(obj, tbl):
     a3 = [_ for _ in sorted(final_values)[2:7]]
     for _ in [a1, a2, a3]:
         if (_[0] + 1) == _[1] and (_[1] + 1) == _[2] and (_[2] + 1) == _[3] and (_[3] + 1) == _[4]:
-            # TODO: might not me working properly
             return ['straight', _]
         else:
+            # if there's no straight, return the high cards
             return [f'high card {sorted(final_values)[-1]}', [higher_cards]]
 
 
 if __name__ == '__main__':
+    # test for returning straight
     player = player.Player(name='teste')
     deck = cards.Deck()
     deck.shuffle()
-    player.hand = deck.give_cards()
+
+    table_card1 = cards.Card('2.png', 3, 'hearts')
+    table_card2 = cards.Card('2.png', 5, 'diamonds')
+    table_card3 = cards.Card('2.png', 6, 'clubs')
+    table_card4 = cards.Card('2.png', 7, 'hearts')
+    table_card5 = cards.Card('2.png', 10, 'clubs')
+
+    player_card1 = cards.Card('2.png', 4, 'diamonds')
+    player_card2 = cards.Card('2.png', 11, 'spades')
+
+    player.hand = player_card1, player_card2
 
     table = bots.Table()
-    table.cards = deck.give_table_cards()
+    table.cards = table_card1, table_card2, table_card3, table_card4, table_card5
     print(hand_value(obj=player, tbl=table))
