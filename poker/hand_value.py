@@ -1,12 +1,12 @@
 from collections import Counter
-import deck
+import cards
 import player
 import bots
 
 
-def higher_not_in_pair(cards, pairs):
+def higher_not_in_pair(cards_, pairs):
     higher_cards_not_in_pair = ''
-    for _ in cards:
+    for _ in cards_:
         if _ not in pairs:
             higher_cards_not_in_pair = _
     return higher_cards_not_in_pair
@@ -106,11 +106,10 @@ def hand_value(obj, tbl):
 
 if __name__ == '__main__':
     player = player.Player(name='teste')
-    deck = deck.Deck()
+    deck = cards.Deck()
     deck.shuffle()
     player.hand = deck.give_cards()
 
     table = bots.Table()
     table.cards = deck.give_table_cards()
     print(hand_value(obj=player, tbl=table))
-

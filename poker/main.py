@@ -3,14 +3,14 @@ import os
 import pygame
 
 import bots
-import deck
+import cards
 import hand_value
 import player
-import functions
+import slider
 
 # TODO: fix the order of things happening in the circle of betting
 
-
+# TODO: fix: WHY THE PLAYER, WHEN WINNING, ALWAYS GET 980 TOTAL CHIPS?
 # function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
     rotated_image = pygame.transform.rotate(image, angle)
@@ -31,7 +31,7 @@ X, Y = 901, 600
 card1_x, card1_y, card2_x, card2_y = 380, 500, 420, 500
 bg = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 sld_cover = pygame.image.load(os.path.join('pics', 'slider-cover.png'))
-deck = deck.Deck()
+deck = cards.Deck()
 deck.shuffle()
 
 # chip img
@@ -81,7 +81,7 @@ card_FX = pygame.mixer.Sound(os.path.join('sounds', 'card.mp3'))  # from free so
 window = pygame.display.set_mode((X, Y))
 game_round = 0  # variable do control current game round
 
-slider = functions.Slider(650, 477, 150, 8)
+slider = slider.Slider(650, 477, 150, 8)
 value = button_font.render('0', True, (207, 222, 227))
 
 call_betmenu = False
@@ -161,6 +161,7 @@ while ...:  # game loop
         blit_rotate_center(window, bot3.hand[0].image, (811, 240), 90)
         blit_rotate_center(window, bot3.hand[1].image, (811, 280), 90)
 
+        # Define winner
         if hand_value.hand_value(player, table)[0].startswith('pair') or \
                 hand_value.hand_value(player, table)[0].startswith('two pair') or \
                 hand_value.hand_value(player, table)[0].startswith('high card') or \
@@ -353,7 +354,6 @@ while ...:  # game loop
                     elif game_round >= 1:  # After the first flop round, the game will follow this sequence: player
                         # -> bot1
                         # -> bot2 -> bot3 -> chips to pot -> next round
-                        # TODO:  optmize the bet menu
 
                         player.bet(get_from_slider(slider, player.chips))
                         # bot1 action
