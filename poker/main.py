@@ -8,9 +8,8 @@ import hand_value
 import player
 import slider
 
-# TODO: fix the order of things happening in the circle of betting
 
-# TODO: fix: WHY THE PLAYER, WHEN WINNING, ALWAYS GET 980 TOTAL CHIPS?
+# TODO: fix the order of things happening in the circle of betting;
 # function to rotate an image object around it's center
 def blit_rotate_center(surf, image, topleft, angle):
     rotated_image = pygame.transform.rotate(image, angle)
@@ -133,7 +132,7 @@ while ...:  # game loop
     window.blit(player.hand[1].image, (card2_x, card2_y))
 
     # bots' cards
-    if game_round < 5:
+    if game_round <= 5:
         # bot1
         blit_rotate_center(window, bot1.hand[0].image_back, (0, 240), 90)
         blit_rotate_center(window, bot1.hand[1].image_back, (0, 280), 90)
@@ -316,7 +315,7 @@ while ...:  # game loop
             # (60, 30) -> buttons dimensions
             # bet button clicked
             if 710 > pygame.mouse.get_pos()[0] > 650 and 530 > pygame.mouse.get_pos()[1] > 500:
-                while game_round < 5:
+                while game_round <= 5:
 
                     if game_round == 0:  # player starts the game by betting the small amount = 20
 
