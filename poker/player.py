@@ -11,7 +11,6 @@ class Player:
         self.win = False
 
     def bet(self, amount):
-        # TODO: every time a bot make a bet, use the bet_animate function to animate it
         if self.chips == 0:
             pass
         else:
@@ -24,3 +23,14 @@ class Player:
 
     def set_name(self, new_name):
         self.name = new_name
+
+
+class Bot(Player):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def do(self):
+        # TODO: analyse the table and the bot's chances to win, then, do the most valuable action.
+        # TODO: every time a bot make a bet, use the bet_animate function to animate it
+        amount = 40
+        self.bet(amount)

@@ -1,12 +1,11 @@
 import os
-
 import pygame
-
-import bots
 import cards
 import hand_value
 import player
 import slider
+import table
+from player import Bot
 
 
 # TODO: fix the order of things happening in the circle of betting;
@@ -41,20 +40,20 @@ player = player.Player(name='player')
 player.hand = deck.give_cards()
 
 # Generate table object
-table = bots.Table()
+table = table.Table()
 table.cards = deck.give_table_cards()
 
 # Generate bot object
 # bot1
-bot1 = bots.Bot(name='bot1')
+bot1 = Bot('bot1')
 bot1.hand = deck.give_cards()
 
 # bot2
-bot2 = bots.Bot(name='bot2')
+bot2 = Bot('bot2')
 bot2.hand = deck.give_cards()
 
 # bot3
-bot3 = bots.Bot(name='bot3')
+bot3 = Bot('bot3')
 bot3.hand = deck.give_cards()
 
 # font

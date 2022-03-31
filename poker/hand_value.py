@@ -1,7 +1,7 @@
 from collections import Counter
 import cards
 import player
-import bots
+import table
 
 
 def higher_not_in_pair(cards_, pairs):
@@ -121,6 +121,6 @@ if __name__ == '__main__':
 
     player.hand = player_card1, player_card2
 
-    table = bots.Table()
+    table = table.Table()
     table.cards = table_card1, table_card2, table_card3, table_card4, table_card5
     print(hand_value(obj=player, tbl=table))
