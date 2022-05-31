@@ -2,6 +2,8 @@ class Colors:
     def __init__(self):
         """
         Class to eliminate the need for adding variables every time you need to add a color to the project
+        :return:
+        None
         """
         # primary colors
         self.red = (255, 0, 0)

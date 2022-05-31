@@ -18,6 +18,7 @@ class Deck:
         """
         shuffles the order of the cards inside the self. deck list
         :return:
+        None
         """
         for _ in [self.clubs, self.spades, self.hearts, self.diamonds]:
             for i in _:
