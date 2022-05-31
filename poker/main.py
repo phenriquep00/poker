@@ -11,4 +11,15 @@ def blit_rotate_center(surf, image, topleft, angle):
     surf.blit(rotated_image, new_rect)
 
 
-X, Y = 901, 600
+# core pygame configuration
+WIDTH, HEIGHT = 901, 600  # window size
+window = pygame.display.set_mode(WIDTH, HEIGHT)  # display object
+pygame.display.set_caption("Pypoker")   # game caption change
+fps = 60    # frames per second
+timer = pygame.time.Clock()     # timer object
+
+
+run = True
+
+while run:
+    timer.tick(fps)
