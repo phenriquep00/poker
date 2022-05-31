@@ -9,9 +9,10 @@ class Button:
         self.Y = Y
         self.rectW = rectW
         self.rectH = rectH
+        self.handle_click = ''
 
     def draw(self):
-        pygame.draw.rect(
+        self.handle_click = pygame.draw.rect(
             surface=self.surf,
             color=self.color,
             rect=[
