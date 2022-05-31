@@ -4,7 +4,9 @@ import random
 
 
 class Deck:
-
+    """
+    A deck object is constituted of 52 card objects, 13 of each nape
+    """
     def __init__(self):
         self.clubs = [Card(image=f'{_}.png', value=_, suit='clubs') for _ in range(2, 15)]
         self.diamonds = [Card(image=f'{_}.png', value=_, suit='diamonds') for _ in range(2, 15)]
@@ -13,6 +15,10 @@ class Deck:
         self.deck = []
 
     def shuffle(self):
+        """
+        shuffles the order of the cards inside the self.deck list
+        :return:
+        """
         for _ in [self.clubs, self.spades, self.hearts, self.diamonds]:
             for i in _:
                 self.deck.append(i)
@@ -20,6 +26,11 @@ class Deck:
         random.shuffle(self.deck)
 
     def give_cards(self):
+        """
+        get the 2 top cards on the deck giving them away to a player
+        :return:
+        2 card objects
+        """
         cards = []
         for _ in range(2):
             _ = self.deck[0]
@@ -28,6 +39,11 @@ class Deck:
         return cards[0], cards[1]
 
     def give_table_cards(self):
+        """
+        get five cards and give them to the table object
+        :return:
+        5 card objects
+        """
         cards = []
         for _ in range(5):
             _ = self.deck[0]
@@ -37,7 +53,9 @@ class Deck:
 
 
 class Card:
-    # Each card will have an image attribute (from pics) and a value
+    """
+    Generate cards to be used in the game
+    """
     def __init__(self, image, value, suit):
         self.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{image}'))
         self.image_back = pygame.image.load(os.path.join('pics', 'card-back.png'))

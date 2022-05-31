@@ -27,7 +27,7 @@ class Button:
     def draw(self):
         """
         set the handle_click attribute to become a pygame rect and make possible to handle rect events.
-        Also create another rect, with width = 3 and a super light gray color, to add a border effect to all buttons
+        Also add two other rectangles with smaller widths to creat a border effect
         """
         self.handle_click = pygame.draw.rect(
             surface=self.surf,
@@ -47,12 +47,29 @@ class Button:
                 (self.X, self.Y),
                 (self.rectW, self.rectH)
             ],
+            width=5,
+            border_radius=5
+        )
+        pygame.draw.rect(
+            surface=self.surf,
+            color=colors.black,
+            rect=[
+                (self.X, self.Y),
+                (self.rectW, self.rectH)
+            ],
             width=3,
             border_radius=5
         )
+
+        # add text to the button
         self.draw_font()
 
     def draw_font(self):
+        """
+        Get the information from the object initialization to acquire the font size then, renders the text and blit
+        it inside the button
+        :return:
+        """
         if 'G' in self.font_size.upper().strip():
             text = FONT_G.render(f'{self.value}', True, colors.white)
             self.surf.blit(text, ((self.X + 20), (self.Y + 25)))
