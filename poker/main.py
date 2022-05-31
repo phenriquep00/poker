@@ -20,9 +20,9 @@ background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 
 # components
 # menu screen components
-play = Button(window, colors.green, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play')  # play button
+play = Button(window, colors.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play', 'g')  # play button
 # configurations button
-config = Button(window, colors.red, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration')  #
+config = Button(window, colors.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
 
 # game window
 game = Game(window)
