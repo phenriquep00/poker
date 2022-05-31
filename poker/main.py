@@ -28,6 +28,8 @@ title = FONT_G.render('Pypoker', True, colors.white)
 play = Button(window, colors.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play', 'g')  # play button
 # configurations button
 config = Button(window, colors.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
+# configurations button
+exit = Button(window, colors.red_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')
 
 # game window
 game = Game(window)
