@@ -58,6 +58,8 @@ while run:
         if event.type == pygame.MOUSEBUTTONUP:
             if play.handle_click.collidepoint(event.pos):   # play button clicked
                 game.start_game()
+            if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
+                run = False
 
     pygame.display.update()
     timer.tick(fps)
