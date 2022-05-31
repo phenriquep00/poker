@@ -16,7 +16,7 @@ class Deck:
 
     def shuffle(self):
         """
-        shuffles the order of the cards inside the self.deck list
+        shuffles the order of the cards inside the self. deck list
         :return:
         """
         for _ in [self.clubs, self.spades, self.hearts, self.diamonds]:

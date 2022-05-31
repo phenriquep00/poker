@@ -52,4 +52,3 @@ while run:
 
     pygame.display.update()
     timer.tick(fps)
-

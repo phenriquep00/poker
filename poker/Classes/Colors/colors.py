@@ -26,4 +26,3 @@ class Colors:
         self.dark_blue3 = (1, 1, 24)
         self.dark_blue2 = (2, 2, 50)
         self.dark_blue1 = (3, 3, 76)
-

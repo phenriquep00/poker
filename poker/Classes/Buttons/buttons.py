@@ -27,7 +27,7 @@ class Button:
     def draw(self):
         """
         set the handle_click attribute to become a pygame rect and make possible to handle rect events.
-        Also add two other rectangles with smaller widths to creat a border effect
+        Also add two other rectangles with smaller widths to create a border effect
         """
         self.handle_click = pygame.draw.rect(
             surface=self.surf,
