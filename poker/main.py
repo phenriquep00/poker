@@ -29,7 +29,7 @@ play = Button(window, colors.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120
 # configurations button
 config = Button(window, colors.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
 # configurations button
-exit = Button(window, colors.red_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')
+terminate = Button(window, colors.dark_red1, ((WIDTH//2) - 150), ((HEIGHT//2) + 160), 300, 100, 'EXIT', 'g')
 
 # game window
 game = Game(window)
@@ -43,6 +43,7 @@ while run:
     window.blit(title, ((WIDTH//2 - 80), 80))
     play.draw()
     config.draw()
+    terminate.draw()
 
     if game.active:
         game.draw()
