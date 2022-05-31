@@ -12,10 +12,15 @@ window = pygame.display.set_mode([WIDTH, HEIGHT])  # display object
 pygame.display.set_caption("Pypoker")   # game caption change
 fps = 60    # frames per second
 timer = pygame.time.Clock()     # timer object
+pygame.init()
+FONT_G = pygame.font.Font('freesansbold.ttf', 40)
 colors = Colors()   # color handler
 
 # image
 background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
+
+# text
+title = FONT_G.render('Pypoker', True, colors.white)
 
 
 # components
@@ -33,6 +38,7 @@ run = True  # game loop control variable
 while run:
 
     window.blit(background, (0, 0))
+    window.blit(title, ((WIDTH//2 - 80), 80))
     play.draw()
     config.draw()
 
