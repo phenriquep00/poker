@@ -1,9 +1,9 @@
 import os
 import pygame
 
+from poker.functions import COLOR
 from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
-from Classes.Colors.colors import Colors
 from Classes.Configurations.configurations import Configurations
 
 
@@ -15,22 +15,21 @@ fps = 60    # frames per second
 timer = pygame.time.Clock()     # timer object
 pygame.init()
 FONT_G = pygame.font.Font('freesansbold.ttf', 40)
-colors = Colors()   # color handler
 
 # image
 background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 
 # text
-title = FONT_G.render('Pypoker', True, colors.white)
+title = FONT_G.render('Pypoker', True, COLOR.white)
 
 
 # components
 # menu screen components
-play = Button(window, colors.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play', 'g')  # play button
+play = Button(window, COLOR.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play', 'g')  # play button
 # configurations button
-config = Button(window, colors.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
+config = Button(window, COLOR.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
 # configurations button
-terminate = Button(window, colors.dark_red1, ((WIDTH//2) - 150), ((HEIGHT//2) + 160), 300, 100, 'EXIT', 'g')
+terminate = Button(window, COLOR.dark_red1, ((WIDTH//2) - 150), ((HEIGHT//2) + 160), 300, 100, 'EXIT', 'g')
 
 # game window
 game = Game(window)
@@ -39,6 +38,7 @@ configs = Configurations(window)
 
 
 run = True  # game loop control variable
+is_menu_active = True
 
 while run:
 
@@ -50,8 +50,10 @@ while run:
 
     if game.active:
         game.draw()
+        is_menu_active = False
     elif configs.active:
         configs.draw()
+        is_menu_active = False
 
     # event loop
     for event in pygame.event.get():
@@ -65,14 +67,17 @@ while run:
             if configs.active:
                 if configs.back_button.handle_click.collidepoint(event.pos):
                     configs.toggle_config()
+                    is_menu_active = True
 
             # Buttons of menu screen event catch
-            if play.handle_click.collidepoint(event.pos):   # play button clicked
-                game.start_game()
-            if config.handle_click.collidepoint(event.pos):     # configuration button clicked
-                configs.toggle_config()
-            if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
-                run = False
+            if is_menu_active:
+                if play.handle_click.collidepoint(event.pos):   # play button clicked
+                    game.start_game()
+                if config.handle_click.collidepoint(event.pos):     # configuration button clicked
+                    configs.toggle_config()
+                    is_menu_active = False
+                if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
+                    run = False
 
     pygame.display.update()
     timer.tick(fps)

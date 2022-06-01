@@ -1,9 +1,18 @@
 import pygame
 
+from poker.Classes.Colors.colors import Colors
+
 pygame.init()
+"""
+    constant variables used in multiple classes of the project
+"""
+# font styles and sizes
 FONT_G = pygame.font.Font('freesansbold.ttf', 40)
 FONT_M = pygame.font.Font('freesansbold.ttf', 24)
 FONT_P = pygame.font.Font('freesansbold.ttf', 16)
+
+# color handler
+COLOR = Colors()
 
 
 def blit_rotate_center(surf, image, topleft, angle):

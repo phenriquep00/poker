@@ -1,9 +1,6 @@
 import pygame
 
-from poker.Classes.Colors.colors import Colors
-from poker.functions import FONT_G, FONT_M, FONT_P
-
-colors = Colors()
+from poker.functions import FONT_G, FONT_M, FONT_P, COLOR
 
 
 class Button:
@@ -41,7 +38,7 @@ class Button:
         # border rect
         pygame.draw.rect(
             surface=self.surf,
-            color=colors.light_gray2,
+            color=COLOR.light_gray2,
             rect=[
                 (self.X, self.Y),
                 (self.rectW, self.rectH)
@@ -51,7 +48,7 @@ class Button:
         )
         pygame.draw.rect(
             surface=self.surf,
-            color=colors.black,
+            color=COLOR.black,
             rect=[
                 (self.X, self.Y),
                 (self.rectW, self.rectH)
@@ -71,11 +68,11 @@ class Button:
         None
         """
         if 'G' in self.font_size.upper().strip():
-            text = FONT_G.render(f'{self.value}', True, colors.white)
+            text = FONT_G.render(f'{self.value}', True, COLOR.white)
             self.surf.blit(text, ((self.X + 20), (self.Y + 25)))
         elif 'M' in self.font_size.upper().strip():
-            text = FONT_M.render(f'{self.value}', True, colors.white)
+            text = FONT_M.render(f'{self.value}', True, COLOR.white)
             self.surf.blit(text, ((self.X + 20), (self.Y + 40)))
         elif 'P' in self.font_size.upper().strip():
-            text = FONT_P.render(f'{self.value}', True, colors.white)
+            text = FONT_P.render(f'{self.value}', True, COLOR.white)
             self.surf.blit(text, ((self.X + 20), (self.Y + 60)))

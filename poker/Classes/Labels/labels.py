@@ -1,7 +1,4 @@
-from poker.functions import blit_rotate_center, FONT_G, FONT_M, FONT_P
-from poker.Classes.Colors.colors import Colors
-
-colors = Colors()
+from poker.functions import blit_rotate_center, FONT_G, FONT_M, FONT_P, COLOR
 
 
 class Label:
@@ -21,11 +18,11 @@ class Label:
             None
         """
         if 'G' in self.font.upper().strip():
-            text = FONT_G.render(f'{self.text}', True, colors.white)
+            text = FONT_G.render(f'{self.text}', True, COLOR.white)
             blit_rotate_center(self.surf, text, (self.X, self.Y), self.angle)
         elif 'M' in self.font.upper().strip():
-            text = FONT_M.render(f'{self.text}', True, colors.white)
+            text = FONT_M.render(f'{self.text}', True, COLOR.white)
             blit_rotate_center(self.surf, text, (self.X, self.Y), self.angle)
         elif 'P' in self.font.upper().strip():
-            text = FONT_P.render(f'{self.text}', True, colors.white)
+            text = FONT_P.render(f'{self.text}', True, COLOR.white)
             blit_rotate_center(self.surf, text, (self.X, self.Y), self.angle)

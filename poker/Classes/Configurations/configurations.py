@@ -1,8 +1,5 @@
-from poker.Classes.Colors.colors import Colors
+from poker.functions import COLOR
 from poker.Classes.Buttons.buttons import Button
-
-
-colors = Colors()
 
 
 class Configurations:
@@ -10,10 +7,10 @@ class Configurations:
 
         self.surface = surface
         self.active = False
-        self.back_button = Button(self.surface, colors.dark_gray3, 0, 0, 100, 100, 'Back', 'm')
+        self.back_button = Button(self.surface, COLOR.dark_gray3, 0, 0, 100, 100, 'Back', 'm')
 
     def draw(self):
-        self.surface.fill(colors.black)
+        self.surface.fill(COLOR.black)
         self.back_button.draw()
 
     def toggle_config(self):
@@ -26,5 +23,3 @@ class Configurations:
             self.active = False
         else:
             self.active = True
-
-
