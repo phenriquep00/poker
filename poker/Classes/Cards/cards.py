@@ -58,6 +58,12 @@ class Card:
     Generate cards to be used in the game
     """
     def __init__(self, image, value, suit):
+        """
+
+        :param image: image-like archive to be used as the card front
+        :param value: number of the card, from 2 to 14
+        :param suit: card's suit
+        """
         self.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{image}'))
         self.image_back = pygame.image.load(os.path.join('pics', 'card-back.png'))
         self.value = value
