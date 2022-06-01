@@ -15,6 +15,10 @@ class Game:
     chips
     """
     def __init__(self, surf):
+        """
+
+        :param surf: surface where the game object will be created
+        """
         self.surf = surf
         self.background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
         self.active = False
