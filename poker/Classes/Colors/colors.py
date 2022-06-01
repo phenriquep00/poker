@@ -13,10 +13,14 @@ class Colors:
         self.black = (0, 0, 0)
 
         # grays
+        # light
         self.light_gray3 = (220, 220, 220)
         self.light_gray2 = (200, 200, 200)
         self.light_gray1 = (180, 180, 180)
-
+        # dark
+        self.dark_gray3 = (30, 30, 30)
+        self.dark_gray2 = (45, 45, 45)
+        self.dark_gray1 = (60, 60, 60)
         # greens
         # dark
         self.dark_green3 = (1, 24, 1)

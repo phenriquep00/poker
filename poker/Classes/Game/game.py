@@ -32,6 +32,7 @@ class Game:
         self.surf = surf
         self.background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
         self.active = False
+
         self.deck = Deck()
         self.player = Player('User')
         self.table = Table()

@@ -4,6 +4,7 @@ import pygame
 from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
 from Classes.Colors.colors import Colors
+from Classes.Configurations.configurations import Configurations
 
 
 # core pygame configuration
@@ -33,6 +34,8 @@ terminate = Button(window, colors.dark_red1, ((WIDTH//2) - 150), ((HEIGHT//2) + 
 
 # game window
 game = Game(window)
+# config windows
+configs = Configurations(window)
 
 
 run = True  # game loop control variable
@@ -47,6 +50,8 @@ while run:
 
     if game.active:
         game.draw()
+    elif configs.active:
+        configs.draw()
 
     # event loop
     for event in pygame.event.get():
@@ -59,7 +64,7 @@ while run:
             if play.handle_click.collidepoint(event.pos):   # play button clicked
                 game.start_game()
             if config.handle_click.collidepoint(event.pos):     # configuration button clicked
-                pass
+                configs.start_config()
             if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
                 run = False
 
