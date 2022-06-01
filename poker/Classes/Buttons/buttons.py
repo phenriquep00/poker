@@ -1,12 +1,9 @@
 import pygame
 
 from poker.Classes.Colors.colors import Colors
+from poker.functions import FONT_G, FONT_M, FONT_P
 
 colors = Colors()
-pygame.init()
-FONT_G = pygame.font.Font('freesansbold.ttf', 40)
-FONT_M = pygame.font.Font('freesansbold.ttf', 24)
-FONT_P = pygame.font.Font('freesansbold.ttf', 16)
 
 
 class Button:
