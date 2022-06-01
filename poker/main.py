@@ -41,13 +41,14 @@ run = True  # game loop control variable
 is_menu_active = True
 
 while run:
-
     window.blit(background, (0, 0))
     window.blit(title, ((WIDTH//2 - 80), 80))
     play.draw()
     config.draw()
     terminate.draw()
 
+    # check if whether the game or the configs object is active, to blit them and toggle the is_menu_active variable
+    # to deactivate the menu buttons
     if game.active:
         game.draw()
         is_menu_active = False

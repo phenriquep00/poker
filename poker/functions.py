@@ -4,7 +4,7 @@ from poker.Classes.Colors.colors import Colors
 
 pygame.init()
 """
-    constant variables used in multiple classes of the project
+constant variables used in multiple classes of the project
 """
 # font styles and sizes
 FONT_G = pygame.font.Font('freesansbold.ttf', 40)

@@ -8,6 +8,17 @@ class Button:
     Button class to normalize the style of every button in the project
     """
     def __init__(self, surf, color, X, Y, rectW, rectH, value, font_size):
+        """
+
+        :param surf: pygame display object
+        :param color: color of the button's background
+        :param X: X coordinate for where the button will start (top-left)
+        :param Y: Y coordinate for where the button will start (top-left)
+        :param rectW: button width
+        :param rectH: button height
+        :param value: button text
+        :param font_size: size of the font
+        """
         self.surf = surf
         self.color = color
         self.X = X
