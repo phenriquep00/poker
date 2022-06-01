@@ -61,10 +61,16 @@ while run:
 
         # check if the mouse was clicked
         if event.type == pygame.MOUSEBUTTONUP:
+            # Config screen buttons event catch
+            if configs.active:
+                if configs.back_button.handle_click.collidepoint(event.pos):
+                    configs.toggle_config()
+
+            # Buttons of menu screen event catch
             if play.handle_click.collidepoint(event.pos):   # play button clicked
                 game.start_game()
             if config.handle_click.collidepoint(event.pos):     # configuration button clicked
-                configs.start_config()
+                configs.toggle_config()
             if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
                 run = False
 

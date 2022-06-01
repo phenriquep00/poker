@@ -20,7 +20,7 @@ class Button:
         self.Y = Y
         self.rectW = rectW
         self.rectH = rectH
-        self.handle_click = ''
+        self.handle_click = pygame.rect.Rect
         self.value = value
         self.font_size = font_size
 
