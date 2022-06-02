@@ -20,11 +20,12 @@ class ChipsSelector:
         self.min.draw()
         self.amount_display.draw()
 
-    def toggle_activity(self):
-        if self.active:
-            self.active = False
-        else:
-            self.active = True
+    def open(self):
+        self.active = True
+
+    def close(self):
+        self.active = False
+        self.amount = 0
 
     def add_chips(self, value=5):
         self.amount += value

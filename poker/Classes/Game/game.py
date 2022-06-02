@@ -122,7 +122,7 @@ class Game:
         self.deck.shuffle()
         # give cards
         # table cards
-        self.table = self.deck.give_table_cards()
+        self.table.cards = self.deck.give_table_cards()
         # players' cards (bots included)
         for _ in [self.player, self.bot1, self.bot2, self.bot3]:
             _.hand = self.deck.give_cards()

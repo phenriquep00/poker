@@ -90,7 +90,11 @@ while run:
                 # BetMenu
                 if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):
                     # "BET" was clicked
-                    game.chip_selector.toggle_activity()
+                    if game.chip_selector.active:
+                        game.table.get_chips(game.player.bet(game.chip_selector.amount))
+                        game.chip_selector.close()
+                    elif not game.chip_selector.active:
+                        game.chip_selector.open()
                 elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
                     # "PASS" was clicked
                     print('pass')

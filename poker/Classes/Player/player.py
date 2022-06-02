@@ -8,6 +8,10 @@ class Player:
         self.chips = 500
         self.name = name
 
+    def bet(self, amount):
+        self.chips -= amount
+        return amount
+
 
 class Bot(Player):
     def __init__(self, name):
