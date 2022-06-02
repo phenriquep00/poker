@@ -9,7 +9,6 @@ class Button:
     """
     def __init__(self, surf, color, X, Y, rectW, rectH, value, font_size):
         """
-
         :param surf: pygame display object
         :param color: color of the button's background
         :param X: X coordinate for where the button will start (top-left)

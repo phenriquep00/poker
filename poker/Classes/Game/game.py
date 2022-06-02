@@ -16,8 +16,7 @@ class Game:
     """
     def __init__(self, surf):
         """
-
-        :param surf: surface where the game object will be created
+        :param: surf: surface where the game object will be created
         """
         self.surf = surf
         self.background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
@@ -29,6 +28,8 @@ class Game:
         self.bot1 = Bot('Bot1')
         self.bot2 = Bot('Bot2')
         self.bot3 = Bot('Bot3')
+        self.chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
+
         self.first_actions()
 
     def start_game(self):
@@ -46,13 +47,16 @@ class Game:
         None
         """
         if self.active:
+            self.surf.blit(self.background, (0, 0))
+
             # player draw
             # player's name
             player_name = Label(self.surf, 400, 470, f'{self.player.name}', 'm')
-            self.surf.blit(self.background, (0, 0))
             # player's cards
             self.surf.blit(self.player.hand[0].image, (380, 500))
             self.surf.blit(self.player.hand[1].image, (420, 500))
+            # player's chips
+            self.surf.blit(self.chip_img, (500, 560))
             player_name.draw()
 
             # bots' draw
@@ -62,6 +66,8 @@ class Game:
             # bot1 cards
             blit_rotate_center(self.surf, self.bot1.hand[0].image_back, (0, 240), 90)
             blit_rotate_center(self.surf, self.bot1.hand[1].image_back, (0, 280), 90)
+            # bot1 chips
+            self.surf.blit(self.chip_img, (0, 220))
             bot1_name.draw()
 
             # bot2
@@ -70,6 +76,8 @@ class Game:
             # bot2 cards
             self.surf.blit(self.bot2.hand[0].image_back, (380, 0))
             self.surf.blit(self.bot2.hand[1].image_back, (420, 0))
+            # bot2 chips
+            self.surf.blit(self.chip_img, (490, 0))
             bot2_name.draw()
 
             # bot3
@@ -78,6 +86,8 @@ class Game:
             # bot3 cards
             blit_rotate_center(self.surf, self.bot3.hand[0].image_back, (811, 240), 90)
             blit_rotate_center(self.surf, self.bot3.hand[1].image_back, (811, 280), 90)
+            # bot3 chips
+            self.surf.blit(self.chip_img, (801, 220))
             bot3_name.draw()
 
     def first_actions(self):
