@@ -77,23 +77,26 @@ while run:
             if game.active:
 
                 # ChipSelector
-                if game.chip_selector.active:
-                    if game.chip_selector.add.handle_click.collidepoint(event.pos):
-                        if game.chip_selector.amount < game.player.chips:
-                            game.chip_selector.add_chips()
-                    elif game.chip_selector.sub.handle_click.collidepoint(event.pos):
-                        game.chip_selector.sub_chips()
-                    elif game.chip_selector.max.handle_click.collidepoint(event.pos):
-                        if game.chip_selector.amount < game.player.chips:
-                            game.chip_selector.add_chips(value=game.player.chips)
+                if game.chip_selector.active:   # chip_selector buttons click handler
+                    if game.chip_selector.add.handle_click.collidepoint(event.pos):  # "ADD" button
+                        if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
+                            game.chip_selector.add_chips()  # if the value isn't the max, adds 5 to the amount
+                    elif game.chip_selector.sub.handle_click.collidepoint(event.pos):   # "SUB" button
+                        game.chip_selector.sub_chips()  # Subtracts 5 from the amount, if it's more than 0
+                    elif game.chip_selector.max.handle_click.collidepoint(event.pos):   # "MAX" button
+                        if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
+                            game.chip_selector.add_chips(value=game.player.chips)  # Add the player's total chips
+                            # to the amount
 
                 # BetMenu
                 if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):
                     # "BET" was clicked
                     if game.chip_selector.active:
+                        # Take chips from player and give them to table, then closes the chip_selector
+                        # only if the chip_selector was already open
                         game.table.get_chips(game.player.bet(game.chip_selector.amount))
                         game.chip_selector.close()
-                    elif not game.chip_selector.active:
+                    elif not game.chip_selector.active:  # opens the chip selector
                         game.chip_selector.open()
                 elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
                     # "PASS" was clicked
