@@ -103,6 +103,11 @@ class Game:
             bot3_chip = Label(self.surf, 836, 230, f'{self.bot3.chips}', 'p')
             bot3_chip.draw()
 
+            # pot
+            self.surf.blit(self.chip_img, (405, 350))
+            pot = Label(self.surf, 440, 360, f'{self.table.pot}', 'p')
+            pot.draw()
+
             # bet menu
             self.bet_menu.draw()
             if self.chip_selector.active:
