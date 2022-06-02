@@ -52,43 +52,51 @@ class Game:
             # player draw
             # player's name
             player_name = Label(self.surf, 400, 470, f'{self.player.name}', 'm')
+            player_name.draw()
             # player's cards
             self.surf.blit(self.player.hand[0].image, (380, 500))
             self.surf.blit(self.player.hand[1].image, (420, 500))
             # player's chips
-            self.surf.blit(self.chip_img, (500, 560))
-            player_name.draw()
+            self.surf.blit(self.chip_img, (500, 560))   # chip image
+            player_chip = Label(self.surf, 535, 570, f'{self.player.chips}', 'p')
+            player_chip.draw()
 
             # bots' draw
             # bot1
             # name
             bot1_name = Label(self.surf, 72, 300, f'{self.bot1.name}', 'm', 270)
+            bot1_name.draw()
             # bot1 cards
             blit_rotate_center(self.surf, self.bot1.hand[0].image_back, (0, 240), 90)
             blit_rotate_center(self.surf, self.bot1.hand[1].image_back, (0, 280), 90)
             # bot1 chips
-            self.surf.blit(self.chip_img, (0, 220))
-            bot1_name.draw()
+            self.surf.blit(self.chip_img, (0, 220))     # chip's image
+            bot1_chip = Label(self.surf, 35, 230, f'{self.bot1.chips}', 'p')
+            bot1_chip.draw()
 
             # bot2
             # name
             bot2_name = Label(self.surf, 410, 100, f'{self.bot2.name}', 'm', 180)
+            bot2_name.draw()
             # bot2 cards
             self.surf.blit(self.bot2.hand[0].image_back, (380, 0))
             self.surf.blit(self.bot2.hand[1].image_back, (420, 0))
             # bot2 chips
-            self.surf.blit(self.chip_img, (490, 0))
-            bot2_name.draw()
+            self.surf.blit(self.chip_img, (490, 0))     # chip's image
+            bot2_chip = Label(self.surf, 525, 10, f'{self.bot2.chips}', 'p')
+            bot2_chip.draw()
 
             # bot3
             # name
             bot3_name = Label(self.surf, 760, 300, f'{self.bot3.name}', 'm', 90)
+            bot3_name.draw()
             # bot3 cards
             blit_rotate_center(self.surf, self.bot3.hand[0].image_back, (811, 240), 90)
             blit_rotate_center(self.surf, self.bot3.hand[1].image_back, (811, 280), 90)
             # bot3 chips
             self.surf.blit(self.chip_img, (801, 220))
-            bot3_name.draw()
+            bot3_chip = Label(self.surf, 836, 230, f'{self.bot3.chips}', 'p')
+            bot3_chip.draw()
 
     def first_actions(self):
         """
