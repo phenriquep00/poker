@@ -35,7 +35,7 @@ class Game:
         self.bet_menu = BetMenu(self.surf)
         self.chip_selector = ChipsSelector(self.surf)
 
-        self.first_actions()
+        self.__first_actions()
 
     def start_game(self):
         """
@@ -108,7 +108,7 @@ class Game:
             if self.chip_selector.active:
                 self.chip_selector.draw()
 
-    def first_actions(self):
+    def __first_actions(self):
         """
         Make the initial configurations to the game object:
             - Shuffles the deck

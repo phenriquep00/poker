@@ -68,9 +68,9 @@ class Button:
         )
 
         # add text to the button
-        self.draw_font()
+        self.__draw_font()
 
-    def draw_font(self):
+    def __draw_font(self):
         """
         Get the information from the object initialization to acquire the font size then, renders the text and blit
         it inside the button

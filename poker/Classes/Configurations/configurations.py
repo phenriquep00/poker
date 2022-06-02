@@ -10,11 +10,11 @@ class Configurations:
         """
         self.surface = surface
         self.active = False
-        self.back_button = Button(self.surface, COLOR.dark_gray3, 0, 0, 100, 100, 'Back', 'm')
+        self.back_button = Button(self.surface, COLOR.dark_gray3, 0, 0, 100, 60, 'Back', 'm')
 
     def draw(self):
         """
-        fill the surface screen with the configs background, and draw the elements inside configrations
+        fill the surface screen with the configs background, and draw the elements inside configurations
         :return:
         None
         """

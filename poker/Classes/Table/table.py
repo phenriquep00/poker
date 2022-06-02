@@ -5,4 +5,4 @@ class Table:
 
     def get_chips(self, amount):
         self.pot += amount
-        print(self.pot)
+

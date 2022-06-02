@@ -48,6 +48,7 @@ class ChipsSelector:
         """
         self.active = False
         self.amount = 0
+        self.__update_value()
 
     def add_chips(self, value=5):
         """
@@ -57,7 +58,7 @@ class ChipsSelector:
         None
         """
         self.amount += value
-        self.amount_display = Button(self.surf, COLOR.dark_gray1, 725, 480, 70, 30, f'{self.amount}', 'p')
+        self.__update_value()
 
     def sub_chips(self, value=5):
         """
@@ -66,6 +67,9 @@ class ChipsSelector:
         :return:
         None
         """
-        if self.amount >= 0:
+        if self.amount > 0:
             self.amount -= value
-            self.amount_display = Button(self.surf, COLOR.dark_gray1, 725, 480, 70, 30, f'{self.amount}', 'p')
+            self.__update_value()
+
+    def __update_value(self):
+        self.amount_display = Button(self.surf, COLOR.dark_gray1, 725, 480, 70, 30, f'{self.amount}', 'p')
