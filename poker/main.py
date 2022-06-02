@@ -11,6 +11,9 @@ from Classes.Configurations.configurations import Configurations
 WIDTH, HEIGHT = 901, 600  # window size
 window = pygame.display.set_mode([WIDTH, HEIGHT])  # display object
 pygame.display.set_caption("Pypoker")   # game caption change
+# set window icon
+icon = pygame.image.load(os.path.join('pics', 'poker_icon.png'))
+pygame.display.set_icon(icon)
 fps = 60    # frames per second
 timer = pygame.time.Clock()     # timer object
 pygame.init()
