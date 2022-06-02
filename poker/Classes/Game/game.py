@@ -7,6 +7,7 @@ from poker.Classes.Player.player import Player
 from poker.Classes.Player.player import Bot
 from poker.Classes.Table.table import Table
 from poker.Classes.Labels.labels import Label
+from poker.Classes.BetMenu.bet_menu import BetMenu
 
 
 class Game:
@@ -97,6 +98,10 @@ class Game:
             self.surf.blit(self.chip_img, (801, 220))
             bot3_chip = Label(self.surf, 836, 230, f'{self.bot3.chips}', 'p')
             bot3_chip.draw()
+
+            # bet menu
+            bet_menu = BetMenu(self.surf)
+            bet_menu.draw()
 
     def first_actions(self):
         """

@@ -82,7 +82,7 @@ class Button:
             self.surf.blit(text, ((self.X + 20), (self.Y + 25)))
         elif 'M' in self.font_size.upper().strip():
             text = FONT_M.render(f'{self.value}', True, COLOR.white)
-            self.surf.blit(text, ((self.X + 20), (self.Y + 40)))
+            self.surf.blit(text, ((self.X + 15), (self.Y + 20)))
         elif 'P' in self.font_size.upper().strip():
             text = FONT_P.render(f'{self.value}', True, COLOR.white)
-            self.surf.blit(text, ((self.X + 20), (self.Y + 60)))
+            self.surf.blit(text, ((self.X + 10), (self.Y + 15)))
