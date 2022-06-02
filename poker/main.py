@@ -73,6 +73,31 @@ while run:
                     configs.toggle_config()
                     is_menu_active = True
 
+            # Game screen buttons event catch
+            if game.active:
+
+                # ChipSelector
+                if game.chip_selector.active:
+                    if game.chip_selector.add.handle_click.collidepoint(event.pos):
+                        if game.chip_selector.amount < game.player.chips:
+                            game.chip_selector.add_chips()
+                    elif game.chip_selector.sub.handle_click.collidepoint(event.pos):
+                        game.chip_selector.sub_chips()
+                    elif game.chip_selector.max.handle_click.collidepoint(event.pos):
+                        if game.chip_selector.amount < game.player.chips:
+                            game.chip_selector.add_chips(value=game.player.chips)
+
+                # BetMenu
+                if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):
+                    # "BET" was clicked
+                    game.chip_selector.toggle_activity()
+                elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
+                    # "PASS" was clicked
+                    print('pass')
+                elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
+                    # "FOLD" was clicked
+                    print('fold')
+
             # Buttons of menu screen event catch
             if is_menu_active:
                 if play.handle_click.collidepoint(event.pos):   # play button clicked

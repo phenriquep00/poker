@@ -8,6 +8,7 @@ from poker.Classes.Player.player import Bot
 from poker.Classes.Table.table import Table
 from poker.Classes.Labels.labels import Label
 from poker.Classes.BetMenu.bet_menu import BetMenu
+from poker.Classes.BetMenu.chips_selector import ChipsSelector
 
 
 class Game:
@@ -30,6 +31,9 @@ class Game:
         self.bot2 = Bot('Bot2')
         self.bot3 = Bot('Bot3')
         self.chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
+
+        self.bet_menu = BetMenu(self.surf)
+        self.chip_selector = ChipsSelector(self.surf)
 
         self.first_actions()
 
@@ -100,8 +104,9 @@ class Game:
             bot3_chip.draw()
 
             # bet menu
-            bet_menu = BetMenu(self.surf)
-            bet_menu.draw()
+            self.bet_menu.draw()
+            if self.chip_selector.active:
+                self.chip_selector.draw()
 
     def first_actions(self):
         """
