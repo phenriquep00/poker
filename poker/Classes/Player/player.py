@@ -7,6 +7,7 @@ class Player:
         self.hand = []
         self.chips = 500
         self.name = name
+        self.active = False
 
     def bet(self, amount):
         self.chips -= amount
@@ -16,3 +17,7 @@ class Player:
 class Bot(Player):
     def __init__(self, name):
         super().__init__(name)
+
+    def do(self):
+        if self.active:
+            self.bet(10)

@@ -27,7 +27,7 @@ class Game:
         self.round = 0
 
         self.deck = Deck()
-        self.player = Player('User')
+        self.player = Player('Player')
         self.table = Table()
         self.bot1 = Bot('Bot1')
         self.bot2 = Bot('Bot2')
@@ -37,6 +37,11 @@ class Game:
         self.bet_menu = BetMenu(self.surf)
         self.game_menu = GameMenu(self.surf)
         self.chip_selector = ChipsSelector(self.surf)
+
+        self.players = [self.player, self.bot1, self.bot2, self.bot3]
+
+        self.small = self.players[0]
+        self.big = self.players[1]
 
         self.__first_actions()
 
@@ -137,3 +142,5 @@ class Game:
         # players' cards (bots included)
         for _ in [self.player, self.bot1, self.bot2, self.bot3]:
             _.hand = self.deck.give_cards()
+
+        self.small.active = True
