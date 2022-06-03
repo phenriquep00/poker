@@ -55,6 +55,12 @@ while run:
     if game.active:
         game.draw()
         is_menu_active = False
+
+        for current_player in game.players:
+            if current_player.name.startswith('Bot') and current_player.active:
+                game.table.get_chips(current_player.bet(20))
+                game.next()
+
     elif configs.active:
         configs.draw()
         is_menu_active = False
@@ -100,6 +106,7 @@ while run:
                             # Take chips from player and give them to table, then closes the chip_selector
                             # only if the chip_selector was already open
                             game.table.get_chips(game.player.bet(game.chip_selector.amount))
+                            game.next()
                             game.chip_selector.close()
                         elif not game.chip_selector.active:  # opens the chip selector
                             game.chip_selector.open()

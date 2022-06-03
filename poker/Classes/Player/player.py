@@ -1,3 +1,5 @@
+
+
 class Player:
     def __init__(self, name):
         """
@@ -10,14 +12,14 @@ class Player:
         self.active = False
 
     def bet(self, amount):
-        self.chips -= amount
-        return amount
+        if self.active:
+            self.chips -= amount
+            return amount
+
+    def turn(self):
+        self.active = True
 
 
 class Bot(Player):
     def __init__(self, name):
         super().__init__(name)
-
-    def do(self):
-        if self.active:
-            self.bet(10)

@@ -124,6 +124,14 @@ class Game:
             # game menu
             self.game_menu.draw()
 
+            # active
+            atv = ''
+            for _ in self.players:
+                if _.active:
+                    atv = _.name
+            ativo = Label(self.surf, 200, 350, f'ativo: {atv}', 'm')
+            ativo.draw()
+
     def __first_actions(self):
         """
         Make the initial configurations to the game object:
@@ -144,3 +152,24 @@ class Game:
             _.hand = self.deck.give_cards()
 
         self.small.active = True
+
+    def next(self):
+        for player in self.players:
+            if player.active:
+
+                if player.name == self.player.name:
+                    player.active = False
+                    self.bot1.active = True
+                    break
+                elif player.name == self.bot1.name:
+                    player.active = False
+                    self.bot2.active = True
+                    break
+                elif player.name == self.bot2.name:
+                    player.active = False
+                    self.bot3.active = True
+                    break
+                elif player.name == self.bot3.name:
+                    player.active = False
+                    self.player.active = True
+                    break
