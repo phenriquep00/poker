@@ -12,9 +12,11 @@ class Player:
         self.active = False
 
     def bet(self, amount):
-        if self.active:
+        if self.active and self.chips > 0:
             self.chips -= amount
             return amount
+        else:
+            return 0
 
     def turn(self):
         self.active = True

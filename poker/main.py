@@ -58,7 +58,7 @@ while run:
 
         for current_player in game.players:
             if current_player.name.startswith('Bot') and current_player.active:
-                game.table.get_chips(current_player.bet(20))
+                game.table.get_chips(current_player.bet(10))
                 game.next()
 
     elif configs.active:

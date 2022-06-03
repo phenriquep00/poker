@@ -125,12 +125,15 @@ class Game:
             self.game_menu.draw()
 
             # active
+            # DEBUG ONLY
             atv = ''
             for _ in self.players:
                 if _.active:
                     atv = _.name
             ativo = Label(self.surf, 200, 350, f'ativo: {atv}', 'm')
             ativo.draw()
+            turno = Label(self.surf, 800, 0, f'round: {self.round}', 'm')
+            turno.draw()
 
     def __first_actions(self):
         """
