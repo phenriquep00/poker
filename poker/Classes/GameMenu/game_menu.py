@@ -3,6 +3,9 @@ from poker.Classes.Buttons.buttons import Button
 
 
 class GameMenu:
+    """
+    Menu for game options ( restart, exit, check card combinations )
+    """
     def __init__(self, surf):
         self.surf = surf
         self.active = False
