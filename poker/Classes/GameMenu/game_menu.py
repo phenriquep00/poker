@@ -18,7 +18,7 @@ class GameMenu:
                 border=False
             )for _ in [8, 16, 24]
         ]
-        self.menu = Button(self.surf, COLOR.dark_gray3, 0, 0, 200, 300, border=False)
+        self.menu = Button(self.surf, COLOR.black, 0, 0, 200, 300, border=False)
 
     def draw(self):
         if self.active:
