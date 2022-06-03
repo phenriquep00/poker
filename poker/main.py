@@ -76,6 +76,10 @@ while run:
             # Game screen buttons event catch
             if game.active:
 
+                # Menu
+                if game.game_menu.bg.handle_click.collidepoint(event.pos):
+                    game.game_menu.toggle()
+
                 # ChipSelector
                 if game.chip_selector.active:   # chip_selector buttons click handler
                     if game.chip_selector.add.handle_click.collidepoint(event.pos):  # "ADD" button

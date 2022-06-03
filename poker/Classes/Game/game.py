@@ -9,6 +9,7 @@ from poker.Classes.Table.table import Table
 from poker.Classes.Labels.labels import Label
 from poker.Classes.BetMenu.bet_menu import BetMenu
 from poker.Classes.BetMenu.chips_selector import ChipsSelector
+from poker.Classes.GameMenu.game_menu import GameMenu
 
 
 class Game:
@@ -23,6 +24,7 @@ class Game:
         self.surf = surf
         self.background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
         self.active = False
+        self.round = 0
 
         self.deck = Deck()
         self.player = Player('User')
@@ -33,6 +35,7 @@ class Game:
         self.chip_img = pygame.image.load(os.path.join('pics', 'bet-img.png'))
 
         self.bet_menu = BetMenu(self.surf)
+        self.game_menu = GameMenu(self.surf)
         self.chip_selector = ChipsSelector(self.surf)
 
         self.__first_actions()
@@ -112,6 +115,9 @@ class Game:
             self.bet_menu.draw()
             if self.chip_selector.active:
                 self.chip_selector.draw()
+
+            # game menu
+            self.game_menu.draw()
 
     def __first_actions(self):
         """

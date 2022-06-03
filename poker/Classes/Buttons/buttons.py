@@ -7,7 +7,7 @@ class Button:
     """
     Button class to normalize the style of every button in the project
     """
-    def __init__(self, surf, color, X, Y, rectW, rectH, value, font_size):
+    def __init__(self, surf, color, X, Y, rectW, rectH, value='', font_size='p', border=True):
         """
         :param surf: pygame display object
         :param color: color of the button's background
@@ -27,6 +27,7 @@ class Button:
         self.handle_click = pygame.rect.Rect
         self.value = value
         self.font_size = font_size
+        self.border = border
 
     def draw(self):
         """
@@ -46,26 +47,27 @@ class Button:
         )
 
         # border rect
-        pygame.draw.rect(
-            surface=self.surf,
-            color=COLOR.light_gray2,
-            rect=[
-                (self.X, self.Y),
-                (self.rectW, self.rectH)
-            ],
-            width=5,
-            border_radius=5
-        )
-        pygame.draw.rect(
-            surface=self.surf,
-            color=COLOR.black,
-            rect=[
-                (self.X, self.Y),
-                (self.rectW, self.rectH)
-            ],
-            width=3,
-            border_radius=5
-        )
+        if self.border:
+            pygame.draw.rect(
+                surface=self.surf,
+                color=COLOR.light_gray2,
+                rect=[
+                    (self.X, self.Y),
+                    (self.rectW, self.rectH)
+                ],
+                width=5,
+                border_radius=5
+            )
+            pygame.draw.rect(
+                surface=self.surf,
+                color=COLOR.black,
+                rect=[
+                    (self.X, self.Y),
+                    (self.rectW, self.rectH)
+                ],
+                width=3,
+                border_radius=5
+            )
 
         # add text to the button
         self.__draw_font()
