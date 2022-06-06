@@ -4,7 +4,7 @@ import pygame
 from poker.functions import blit_rotate_center
 from poker.Classes.Cards.cards import Deck
 from poker.Classes.Player.player import Player
-from poker.Classes.Player.player import Bot
+from poker.Classes.Player.bot import Bot
 from poker.Classes.Table.table import Table
 from poker.Classes.Labels.labels import Label
 from poker.Classes.BetMenu.bet_menu import BetMenu

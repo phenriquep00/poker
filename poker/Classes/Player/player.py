@@ -20,8 +20,3 @@ class Player:
 
     def turn(self):
         self.active = True
-
-
-class Bot(Player):
-    def __init__(self, name):
-        super().__init__(name)

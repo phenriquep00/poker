@@ -100,14 +100,15 @@ while run:
                                 # to the amount
 
                     # BetMenu
-                    if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):
-                        # "BET" was clicked
-                        if game.chip_selector.active:
-                            # Take chips from player and give them to table, then closes the chip_selector
-                            # only if the chip_selector was already open
-                            game.table.get_chips(game.player.bet(game.chip_selector.amount))
-                            game.next()
-                            game.chip_selector.close()
+                    if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):  # "BET" was clicked
+                        if game.chip_selector.active:   # chip_selector is already open
+                            if game.chip_selector.amount > 0:   # amount bigger than zero
+                                # Take chips from player and give them to table, then closes the chip_selector
+                                # only if the chip_selector was already open
+                                # and the amount to be bet isn't zero
+                                game.table.get_chips(game.player.bet(game.chip_selector.amount))
+                                game.next()
+                                game.chip_selector.close()
                         elif not game.chip_selector.active:  # opens the chip selector
                             game.chip_selector.open()
                     elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
