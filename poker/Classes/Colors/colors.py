@@ -38,3 +38,6 @@ class Colors:
         self.dark_red3 = (24, 1, 1)
         self.dark_red2 = (50, 2, 2)
         self.dark_red1 = (76, 3, 3)
+
+        # yellow
+        self.yellow = (255, 255, 0)

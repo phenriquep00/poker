@@ -1,7 +1,7 @@
 import os
 import pygame
 
-from poker.functions import blit_rotate_center
+from poker.functions import blit_rotate_center, COLOR
 from poker.Classes.Cards.cards import Deck
 from poker.Classes.Player.player import Player
 from poker.Classes.Player.bot import Bot
@@ -61,6 +61,25 @@ class Game:
         """
         if self.active:
             self.surf.blit(self.background, (0, 0))
+
+            # small & big symbols
+            small = Label(self.surf, 0, 0, 'S', 'm', color=COLOR.yellow)
+            big = Label(self.surf, 0, 0, 'B', 'm', color=COLOR.yellow)
+            if self.small == self.player:
+                small.move(360, 500)
+                big.move(5, 365)
+            elif self.small == self.bot1:
+                small.move(5, 365)
+                big.move(360, 5)
+            elif self.small == self.bot2:
+                small.move(360, 5)
+                big.move(870, 365)
+            elif self.small == self.bot3:
+                small.move(870, 365)
+                big.move(360, 500)
+
+            small.draw()
+            big.draw()
 
             # player draw
             # player's name
@@ -130,9 +149,9 @@ class Game:
             for _ in self.players:
                 if _.active:
                     atv = _.name
-            ativo = Label(self.surf, 200, 350, f'ativo: {atv}', 'm')
+            ativo = Label(self.surf, 100, 350, f'"debug"ativo: {atv}', 'm')
             ativo.draw()
-            turno = Label(self.surf, 800, 0, f'round: {self.round}', 'm')
+            turno = Label(self.surf, 700, 0, f'"debug"round: {self.round}', 'm')
             turno.draw()
 
     def __first_actions(self):
