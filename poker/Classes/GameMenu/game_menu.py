@@ -31,7 +31,4 @@ class GameMenu:
             button.draw()
 
     def toggle(self):
-        if self.active:
-            self.active = False
-        else:
-            self.active = True
+        self.active = not self.active

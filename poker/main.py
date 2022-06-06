@@ -52,16 +52,20 @@ while run:
 
     # check if whether the game or the configs object is active, to blit them and toggle the is_menu_active variable
     # to deactivate the menu buttons
-    if game.active:
+    if game.active:  # game is currently going
         game.draw()
         is_menu_active = False
 
         for current_player in game.players:
-            if current_player.name.startswith('Bot') and current_player.active:
-                game.table.get_chips(current_player.bet(10))
-                game.next()
+            # loop through the players list, and get every bot to make its action in order
+            if current_player.playing:
+                # verify if the player hasn't folded or lost
+                if current_player.name.startswith('Bot') and current_player.active:  # check if the current player
+                    # is a bot and is currently active
+                    game.table.get_chips(current_player.bet(10))
+                    game.next()
 
-    elif configs.active:
+    elif configs.active:  # configuration window is currently open
         configs.draw()
         is_menu_active = False
 
@@ -116,7 +120,8 @@ while run:
                         print('pass')
                     elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
                         # "FOLD" was clicked
-                        print('fold')
+                        game.player.fold()  # user leave the round
+                        game.next()     # continue the game
 
             # Buttons of menu screen event catch
             if is_menu_active:

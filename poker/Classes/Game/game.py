@@ -157,22 +157,47 @@ class Game:
         self.small.active = True
 
     def next(self):
+        """
+        Loop through all the players to change the currently active player, given the action to the next player on the
+        list who has the .playing attribute set to True
+        :return:
+        None
+        """
         for player in self.players:
             if player.active:
-
                 if player.name == self.player.name:
                     player.active = False
-                    self.bot1.active = True
+                    if self.bot1.playing:
+                        self.bot1.active = True
+                    elif self.bot2.playing:
+                        self.bot2.active = True
+                    else:
+                        self.bot3.active = True
                     break
                 elif player.name == self.bot1.name:
                     player.active = False
-                    self.bot2.active = True
+                    if self.bot2.playing:
+                        self.bot2.active = True
+                    elif self.bot3.playing:
+                        self.bot3.active = True
+                    else:
+                        self.player.active = True
                     break
                 elif player.name == self.bot2.name:
                     player.active = False
-                    self.bot3.active = True
+                    if self.bot3.playing:
+                        self.bot3.active = True
+                    elif self.player.playing:
+                        self.player.active = True
+                    else:
+                        self.bot1.active = True
                     break
                 elif player.name == self.bot3.name:
                     player.active = False
-                    self.player.active = True
+                    if self.player.playing:
+                        self.player.active = True
+                    elif self.bot1.playing:
+                        self.bot1.active = True
+                    else:
+                        self.bot2.active = True
                     break

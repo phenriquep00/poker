@@ -9,6 +9,7 @@ class Player:
         self.hand = []
         self.chips = 500
         self.name = name
+        self.playing = True
         self.active = False
 
     def bet(self, amount):
@@ -20,3 +21,6 @@ class Player:
 
     def turn(self):
         self.active = True
+
+    def fold(self):
+        self.playing = False
