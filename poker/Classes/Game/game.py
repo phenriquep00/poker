@@ -66,6 +66,7 @@ class Game:
             # small & big symbols
             small = Label(self.surf, 0, 0, 'S', 'm', color=COLOR.yellow)
             big = Label(self.surf, 0, 0, 'B', 'm', color=COLOR.yellow)
+            # change small & big symbol position according to whom is the small bet
             if self.small == self.player:
                 small.move(360, 500)
                 big.move(5, 365)
@@ -143,6 +144,18 @@ class Game:
 
             # game menu
             self.game_menu.draw()
+
+            # table cards
+            # all at once:
+            # coordinates = [(200, 230), (300, 230), (400, 230), (500, 230), (600, 230)]
+            # for _ in range(5):
+            #     self.surf.blit(self.table.cards[_].image, coordinates[_])
+
+            self.surf.blit(self.table.cards[0].image, (200, 230))  # 1° card
+            self.surf.blit(self.table.cards[1].image, (300, 230))  # 2° card
+            self.surf.blit(self.table.cards[2].image, (400, 230))  # 3° card
+            self.surf.blit(self.table.cards[3].image, (500, 230))  # 4° card
+            self.surf.blit(self.table.cards[4].image, (600, 230))  # 5° card
 
             # active
             # DEBUG ONLY
