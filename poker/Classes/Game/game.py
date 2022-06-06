@@ -1,5 +1,6 @@
 import os
 import pygame
+import random
 
 from poker.functions import blit_rotate_center, COLOR
 from poker.Classes.Cards.cards import Deck
@@ -40,8 +41,8 @@ class Game:
 
         self.players = [self.player, self.bot1, self.bot2, self.bot3]
 
-        self.small = self.players[0]
-        self.big = self.players[1]
+        self.small = random.choice(self.players)
+        self.big = self.players[self.players.index(self.small) + 1] if self.small != self.bot3 else self.player
 
         self.__first_actions()
 
