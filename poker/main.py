@@ -62,8 +62,25 @@ while run:
                 # verify if the player hasn't folded or lost
                 if current_player.name.startswith('Bot') and current_player.active:  # check if the current player
                     # is a bot and is currently active
-                    game.table.get_chips(current_player.bet(10))
-                    game.next()
+                    if game.round == 0:  # First round
+                        if game.small == current_player:
+                            if game.table.pot == 0:  # small bet
+                                game.table.get_chips(current_player.bet(game.min))
+                                game.min *= 2
+                            else:
+                                game.table.get_chips(current_player.bet(game.min//2))
+                                game.next_round()
+
+                        elif game.big == current_player and game.table.pot == game.min:     # big bet
+                            game.table.get_chips(current_player.bet(game.min))
+
+                        else:
+                            game.table.get_chips(current_player.bet(game.min))    # only min value for now
+                        print(f'{current_player.name} played')
+                        game.next()
+                    elif game.round == 1:
+                        game.table.get_chips(current_player.bet(game.min))
+                        game.next()
 
     elif configs.active:  # configuration window is currently open
         configs.draw()
@@ -93,6 +110,7 @@ while run:
                 # ChipSelector
                 if game.player.active:  # check if it's the player's turn
                     if game.chip_selector.active:   # chip_selector buttons click handler
+
                         if game.chip_selector.add.handle_click.collidepoint(event.pos):  # "ADD" button
                             if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
                                 game.chip_selector.add_chips()  # if the value isn't the max, adds 5 to the amount
@@ -102,22 +120,46 @@ while run:
                             if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
                                 game.chip_selector.add_chips(value=game.player.chips)  # Add the player's total chips
                                 # to the amount
+                        elif game.chip_selector.min.handle_click.collidepoint(event.pos):
+                            game.chip_selector.min_value(game.min)
 
                     # BetMenu
+
                     if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):  # "BET" was clicked
-                        if game.chip_selector.active:   # chip_selector is already open
-                            if game.chip_selector.amount > 0:   # amount bigger than zero
+                        if game.round == 0 and game.player == game.small:
+                            # check if the player is small bet
+                            if game.table.pot == 0:  # first action
+                                game.table.get_chips(game.player.bet(game.min))
+                                game.min *= 2
+                                print('small bet: player started game')
+                                game.next()
+                            else:  # equalize the amount of chips
+                                game.table.get_chips(game.player.bet(game.min // 2))
+                                game.next_round()
+
+                        elif game.round == 0 and game.player == game.big:
+                            # check if the player is the big bet and give him the chance of only betting the double
+                            # of the small amount
+                            game.table.get_chips(game.player.bet(game.min))
+                            print('big bet: player played')
+                            game.next()
+                        elif game.chip_selector.active:   # chip_selector is already open
+                            if game.chip_selector.amount >= game.min:   # amount bigger than zero
                                 # Take chips from player and give them to table, then closes the chip_selector
                                 # only if the chip_selector was already open
-                                # and the amount to be bet isn't zero
+                                # and the amount to be bet isn't smaller than the minimum amount
                                 game.table.get_chips(game.player.bet(game.chip_selector.amount))
+                                print('player played')
                                 game.next()
                                 game.chip_selector.close()
                         elif not game.chip_selector.active:  # opens the chip selector
+                            # opens the chip selector for the player to bet a custom amount
                             game.chip_selector.open()
                     elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
                         # "PASS" was clicked
-                        print('pass')
+                        if game.min == 0:
+                            game.next()
+
                     elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
                         # "FOLD" was clicked
                         game.player.fold()  # user leave the round

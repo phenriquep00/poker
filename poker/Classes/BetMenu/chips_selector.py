@@ -50,7 +50,7 @@ class ChipsSelector:
         self.amount = 0
         self.__update_value()
 
-    def add_chips(self, value=5):
+    def add_chips(self, value=10):
         """
         add chips to the amount
         :param value: amount of chips to be added, standard value of 5
@@ -60,7 +60,7 @@ class ChipsSelector:
         self.amount += value
         self.__update_value()
 
-    def sub_chips(self, value=5):
+    def sub_chips(self, value=10):
         """
         Subtract chips from the amount
         :param value: amount of chips to be subtracted, standard value of 5
@@ -70,6 +70,10 @@ class ChipsSelector:
         if self.amount > 0:
             self.amount -= value
             self.__update_value()
+
+    def min_value(self, minimum):
+        self.amount = minimum
+        self.__update_value()
 
     def __update_value(self):
         self.amount_display = Button(self.surf, COLOR.dark_gray1, 725, 480, 70, 30, f'{self.amount}', 'p')

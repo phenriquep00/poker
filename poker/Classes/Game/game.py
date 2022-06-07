@@ -41,8 +41,13 @@ class Game:
 
         self.players = [self.player, self.bot1, self.bot2, self.bot3]
 
-        self.small = random.choice(self.players)
-        self.big = self.players[self.players.index(self.small) + 1] if self.small != self.bot3 else self.player
+        # self.small = random.choice(self.players)
+        # self.big = self.players[self.players.index(self.small) + 1] if self.small != self.bot3 else self.players[0]
+
+        self.small = self.bot3
+        self.big = self.player
+
+        self.min = 10
 
         self.__first_actions()
 
@@ -138,9 +143,10 @@ class Game:
             pot.draw()
 
             # bet menu
-            self.bet_menu.draw()
-            if self.chip_selector.active:
-                self.chip_selector.draw()
+            if self.player.active:
+                self.bet_menu.draw()
+                if self.chip_selector.active:
+                    self.chip_selector.draw()
 
             # game menu
             self.game_menu.draw()
@@ -151,11 +157,14 @@ class Game:
             # for _ in range(5):
             #     self.surf.blit(self.table.cards[_].image, coordinates[_])
 
-            self.surf.blit(self.table.cards[0].image, (200, 230))  # 1° card
-            self.surf.blit(self.table.cards[1].image, (300, 230))  # 2° card
-            self.surf.blit(self.table.cards[2].image, (400, 230))  # 3° card
-            self.surf.blit(self.table.cards[3].image, (500, 230))  # 4° card
-            self.surf.blit(self.table.cards[4].image, (600, 230))  # 5° card
+            if self.round == 1:
+                self.surf.blit(self.table.cards[0].image, (200, 230))  # 1° card
+                self.surf.blit(self.table.cards[1].image, (300, 230))  # 2° card
+                self.surf.blit(self.table.cards[2].image, (400, 230))  # 3° card
+            if self.round == 2:
+                self.surf.blit(self.table.cards[3].image, (500, 230))  # 4° card
+            if self.round == 3:
+                self.surf.blit(self.table.cards[4].image, (600, 230))  # 5° card
 
             # active
             # DEBUG ONLY
@@ -234,3 +243,7 @@ class Game:
                     else:
                         self.bot2.active = True
                     break
+
+    def next_round(self):
+        self.round += 1
+        self.min = 0
