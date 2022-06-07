@@ -6,16 +6,15 @@ from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
 from Classes.Configurations.configurations import Configurations
 
-
 # core pygame configuration
 WIDTH, HEIGHT = 901, 600  # window size
 window = pygame.display.set_mode([WIDTH, HEIGHT])  # display object
-pygame.display.set_caption("Pypoker")   # game caption change
+pygame.display.set_caption("Pypoker")  # game caption change
 # set window icon
 icon = pygame.image.load(os.path.join('pics', 'poker_icon.png'))
 pygame.display.set_icon(icon)
-fps = 60    # frames per second
-timer = pygame.time.Clock()     # timer object
+fps = 60  # frames per second
+timer = pygame.time.Clock()  # timer object
 pygame.init()
 FONT_G = pygame.font.Font('freesansbold.ttf', 40)
 
@@ -25,27 +24,27 @@ background = pygame.image.load(os.path.join('pics', 'poker_background.jpeg'))
 # text
 title = FONT_G.render('Pypoker', True, COLOR.white)
 
-
 # components
 # menu screen components
-play = Button(window, COLOR.dark_green1, ((WIDTH//2) - 150), ((HEIGHT//2) - 120), 300, 100, 'Play', 'g')  # play button
+play = Button(window, COLOR.dark_green1, ((WIDTH // 2) - 150), ((HEIGHT // 2) - 120), 300, 100, 'Play',
+              'g')  # play button
 # configurations button
-config = Button(window, COLOR.dark_blue1, ((WIDTH//2) - 150), ((HEIGHT//2) + 20), 300, 100, 'Configuration', 'g')  #
+config = Button(window, COLOR.dark_blue1, ((WIDTH // 2) - 150), ((HEIGHT // 2) + 20), 300, 100, 'Configuration', 'g')  #
 # configurations button
-terminate = Button(window, COLOR.dark_red1, ((WIDTH//2) - 150), ((HEIGHT//2) + 160), 300, 100, 'EXIT', 'g')
+terminate = Button(window, COLOR.dark_red1, ((WIDTH // 2) - 150), ((HEIGHT // 2) + 160), 300, 100, 'EXIT', 'g')
 
 # game window
 game = Game(window)
 # config windows
 configs = Configurations(window)
 
-
 run = True  # game loop control variable
 is_menu_active = True
+x = 0
 
 while run:
     window.blit(background, (0, 0))
-    window.blit(title, ((WIDTH//2 - 80), 80))
+    window.blit(title, ((WIDTH // 2 - 80), 80))
     play.draw()
     config.draw()
     terminate.draw()
@@ -55,7 +54,6 @@ while run:
     if game.active:  # game is currently going
         game.draw()
         is_menu_active = False
-
         for current_player in game.players:
             # loop through the players list, and get every bot to make its action in order
             if current_player.playing:
@@ -68,19 +66,25 @@ while run:
                                 game.table.get_chips(current_player.bet(game.min))
                                 game.min *= 2
                             else:
-                                game.table.get_chips(current_player.bet(game.min//2))
+                                game.table.get_chips(current_player.bet(game.min // 2))
                                 game.next_round()
 
-                        elif game.big == current_player and game.table.pot == game.min:     # big bet
+                        elif game.big == current_player and game.table.pot == game.min:  # big bet
                             game.table.get_chips(current_player.bet(game.min))
 
                         else:
-                            game.table.get_chips(current_player.bet(game.min))    # only min value for now
+                            game.table.get_chips(current_player.bet(game.min))  # only min value for now
                         print(f'{current_player.name} played')
                         game.next()
-                    elif game.round == 1:
+                    elif 4 > game.round >= 1:
                         game.table.get_chips(current_player.bet(game.min))
+                        print(f'{current_player.name} played')
                         game.next()
+                        if current_player == game.small:
+                            x += 1
+                        if x >= 1:
+                            game.next_round()
+                            x = 0
 
     elif configs.active:  # configuration window is currently open
         configs.draw()
@@ -109,15 +113,15 @@ while run:
 
                 # ChipSelector
                 if game.player.active:  # check if it's the player's turn
-                    if game.chip_selector.active:   # chip_selector buttons click handler
+                    if game.chip_selector.active:  # chip_selector buttons click handler
 
                         if game.chip_selector.add.handle_click.collidepoint(event.pos):  # "ADD" button
-                            if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
+                            if game.chip_selector.amount < game.player.chips:  # check if the amount is already the max
                                 game.chip_selector.add_chips()  # if the value isn't the max, adds 5 to the amount
-                        elif game.chip_selector.sub.handle_click.collidepoint(event.pos):   # "SUB" button
+                        elif game.chip_selector.sub.handle_click.collidepoint(event.pos):  # "SUB" button
                             game.chip_selector.sub_chips()  # Subtracts 5 from the amount, if it's more than 0
-                        elif game.chip_selector.max.handle_click.collidepoint(event.pos):   # "MAX" button
-                            if game.chip_selector.amount < game.player.chips:   # check if the amount is already the max
+                        elif game.chip_selector.max.handle_click.collidepoint(event.pos):  # "MAX" button
+                            if game.chip_selector.amount < game.player.chips:  # check if the amount is already the max
                                 game.chip_selector.add_chips(value=game.player.chips)  # Add the player's total chips
                                 # to the amount
                         elif game.chip_selector.min.handle_click.collidepoint(event.pos):
@@ -143,13 +147,14 @@ while run:
                             game.table.get_chips(game.player.bet(game.min))
                             print('big bet: player played')
                             game.next()
-                        elif game.chip_selector.active:   # chip_selector is already open
-                            if game.chip_selector.amount >= game.min:   # amount bigger than zero
+                        elif game.chip_selector.active:  # chip_selector is already open
+                            if game.chip_selector.amount >= game.min:  # amount bigger than zero
                                 # Take chips from player and give them to table, then closes the chip_selector
                                 # only if the chip_selector was already open
                                 # and the amount to be bet isn't smaller than the minimum amount
                                 game.table.get_chips(game.player.bet(game.chip_selector.amount))
                                 print('player played')
+                                game.min = game.chip_selector.amount
                                 game.next()
                                 game.chip_selector.close()
                         elif not game.chip_selector.active:  # opens the chip selector
@@ -163,13 +168,13 @@ while run:
                     elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
                         # "FOLD" was clicked
                         game.player.fold()  # user leave the round
-                        game.next()     # continue the game
+                        game.next()  # continue the game
 
             # Buttons of menu screen event catch
             if is_menu_active:
-                if play.handle_click.collidepoint(event.pos):   # play button clicked
+                if play.handle_click.collidepoint(event.pos):  # play button clicked
                     game.start_game()
-                if config.handle_click.collidepoint(event.pos):     # configuration button clicked
+                if config.handle_click.collidepoint(event.pos):  # configuration button clicked
                     configs.toggle_config()
                     is_menu_active = False
                 if terminate.handle_click.collidepoint(event.pos):  # user pressed the exit button
