@@ -41,11 +41,11 @@ class Game:
 
         self.players = [self.player, self.bot1, self.bot2, self.bot3]
 
-        self.small = random.choice(self.players)
-        self.big = self.players[self.players.index(self.small) + 1] if self.small != self.bot3 else self.players[0]
+        # self.small = random.choice(self.players)
+        # self.big = self.players[self.players.index(self.small) + 1] if self.small != self.bot3 else self.players[0]
 
-        # self.small = self.bot3
-        # self.big = self.player
+        self.small = self.player
+        self.big = self.bot1
 
         self.min = 10
 
@@ -166,12 +166,6 @@ class Game:
 
             # active
             # DEBUG ONLY
-            atv = ''
-            for _ in self.players:
-                if _.active:
-                    atv = _.name
-            ativo = Label(self.surf, 100, 350, f'"debug"ativo: {atv}', 'm')
-            ativo.draw()
             turno = Label(self.surf, 700, 0, f'"debug"round: {self.round}', 'm')
             turno.draw()
 
@@ -245,3 +239,9 @@ class Game:
     def next_round(self):
         self.round += 1
         self.min = 0
+        for _ in self.players:
+            if _ == self.small:
+                _.active = True
+            else:
+                _. active = False
+            _.done = False

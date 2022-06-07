@@ -40,7 +40,6 @@ configs = Configurations(window)
 
 run = True  # game loop control variable
 is_menu_active = True
-x = 0
 
 while run:
     window.blit(background, (0, 0))
@@ -67,7 +66,9 @@ while run:
                                 game.min *= 2
                             else:
                                 game.table.get_chips(current_player.bet(game.min // 2))
+                                print('fim do round')
                                 game.next_round()
+                                break
 
                         elif game.big == current_player and game.table.pot == game.min:  # big bet
                             game.table.get_chips(current_player.bet(game.min))
@@ -80,11 +81,8 @@ while run:
                         game.table.get_chips(current_player.bet(game.min))
                         print(f'{current_player.name} played')
                         game.next()
-                        if current_player == game.small:
-                            x += 1
-                        if x >= 1:
+                        if current_player == game.bot3:
                             game.next_round()
-                            x = 0
 
     elif configs.active:  # configuration window is currently open
         configs.draw()
@@ -128,47 +126,47 @@ while run:
                             game.chip_selector.min_value(game.min)
 
                     # BetMenu
+                    if game.round < 4:
+                        if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):  # "BET" was clicked
+                            if game.round == 0 and game.player == game.small:
+                                # check if the player is small bet
+                                if game.table.pot == 0:  # first action
+                                    game.table.get_chips(game.player.bet(game.min))
+                                    game.min *= 2
+                                    print('small bet: player started game')
+                                    game.next()
+                                else:  # equalize the amount of chips
+                                    game.table.get_chips(game.player.bet(game.min // 2))
+                                    game.next_round()
 
-                    if game.bet_menu.bet_btn.handle_click.collidepoint(event.pos):  # "BET" was clicked
-                        if game.round == 0 and game.player == game.small:
-                            # check if the player is small bet
-                            if game.table.pot == 0:  # first action
+                            elif game.round == 0 and game.player == game.big:
+                                # check if the player is the big bet and give him the chance of only betting the double
+                                # of the small amount
                                 game.table.get_chips(game.player.bet(game.min))
-                                game.min *= 2
-                                print('small bet: player started game')
+                                print('big bet: player played')
                                 game.next()
-                            else:  # equalize the amount of chips
-                                game.table.get_chips(game.player.bet(game.min // 2))
-                                game.next_round()
-
-                        elif game.round == 0 and game.player == game.big:
-                            # check if the player is the big bet and give him the chance of only betting the double
-                            # of the small amount
-                            game.table.get_chips(game.player.bet(game.min))
-                            print('big bet: player played')
-                            game.next()
-                        elif game.chip_selector.active:  # chip_selector is already open
-                            if game.chip_selector.amount >= game.min:  # amount bigger than zero
-                                # Take chips from player and give them to table, then closes the chip_selector
-                                # only if the chip_selector was already open
-                                # and the amount to be bet isn't smaller than the minimum amount
-                                game.table.get_chips(game.player.bet(game.chip_selector.amount))
-                                print('player played')
-                                game.min = game.chip_selector.amount
+                            elif game.chip_selector.active:  # chip_selector is already open
+                                if game.chip_selector.amount >= game.min:  # amount bigger than zero
+                                    # Take chips from player and give them to table, then closes the chip_selector
+                                    # only if the chip_selector was already open
+                                    # and the amount to be bet isn't smaller than the minimum amount
+                                    game.table.get_chips(game.player.bet(game.chip_selector.amount))
+                                    print('player played')
+                                    game.min = game.chip_selector.amount
+                                    game.next()
+                                    game.chip_selector.close()
+                            elif not game.chip_selector.active:  # opens the chip selector
+                                # opens the chip selector for the player to bet a custom amount
+                                game.chip_selector.open()
+                        elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
+                            # "PASS" was clicked
+                            if game.min == 0:
                                 game.next()
-                                game.chip_selector.close()
-                        elif not game.chip_selector.active:  # opens the chip selector
-                            # opens the chip selector for the player to bet a custom amount
-                            game.chip_selector.open()
-                    elif game.bet_menu.pass_btn.handle_click.collidepoint(event.pos):
-                        # "PASS" was clicked
-                        if game.min == 0:
-                            game.next()
 
-                    elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
-                        # "FOLD" was clicked
-                        game.player.fold()  # user leave the round
-                        game.next()  # continue the game
+                        elif game.bet_menu.fold_btn.handle_click.collidepoint(event.pos):
+                            # "FOLD" was clicked
+                            game.player.fold()  # user leave the round
+                            game.next()  # continue the game
 
             # Buttons of menu screen event catch
             if is_menu_active:
