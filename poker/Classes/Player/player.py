@@ -1,6 +1,8 @@
 
 
 class Player:
+    chips = None
+
     def __init__(self, name):
         """
         Player objects to gather all player's data and actions

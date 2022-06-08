@@ -1,6 +1,6 @@
 import os
 import pygame
-import random
+# import random
 
 from poker.functions import blit_rotate_center, COLOR, RANKING
 from poker.Classes.Cards.cards import Deck
@@ -12,6 +12,7 @@ from poker.Classes.BetMenu.bet_menu import BetMenu
 from poker.Classes.BetMenu.chips_selector import ChipsSelector
 from poker.Classes.GameMenu.game_menu import GameMenu
 from poker.Classes.Analyzer.win_analyzer import WinAnalyzer
+from poker.Classes.Buttons.buttons import Button
 
 
 class Game:
@@ -53,7 +54,8 @@ class Game:
         self.__first_actions()
 
         self.win_analyzer = WinAnalyzer(self.table.cards, self.players)
-        self.winner = ''
+        self.winner = Player
+        self.end_btn = Button(self.surf, COLOR.dark_blue2, 720, 520, 85, 50, 'NEXT', 'm')
 
     def start_game(self):
         """
@@ -170,6 +172,8 @@ class Game:
                 winner_text = Label(self.surf, 200, 200, f'Winner: {self.winner.name} with {self.winner.rank[0]}', 'm')
                 winner_text.draw()
 
+                self.end_btn.draw()
+
             # game menu
             self.game_menu.draw()
 
@@ -195,6 +199,7 @@ class Game:
         :return:
         None
         """
+        self.round = 0
         # first action
         # shuffle deck
         self.deck.shuffle()
@@ -204,8 +209,10 @@ class Game:
         # players' cards (bots included)
         for _ in [self.player, self.bot1, self.bot2, self.bot3]:
             _.hand = self.deck.give_cards()
+            _.active = False
 
         self.small.active = True
+        self.min = 10
 
     def next(self):
         """
@@ -265,7 +272,7 @@ class Game:
 
     def get_winner(self):
         rank = RANKING
-
+        # TODO: remake this
         # evaluate all hands
         self.player.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.player))
         self.bot1.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot1))
@@ -282,3 +289,8 @@ class Game:
                     return rank[k][0]
                 else:
                     return rank[k][0]
+
+    def end_round(self):
+        self.winner.chips += self.table.pot
+        self.table.pot = 0
+        self.__first_actions()
