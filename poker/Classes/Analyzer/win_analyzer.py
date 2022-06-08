@@ -18,8 +18,14 @@ class WinAnalyzer:
     def __get_utils(card):
         return card.value, card.suit
 
-    def evaluate(self, hand):
+    @staticmethod
+    def evaluate(hand):
         h, s, d, c = [], [], [], []
+
+        occurrence = {}
+        for i in range(2, 15):
+            occurrence[i] = 0
+
         for card in hand:
             # get amount of cards in every suit
             if card[1] in 'hearts':
@@ -40,15 +46,57 @@ class WinAnalyzer:
                     if sum(cards[:5]) >= 60:
                         # if true, there's a royal flush
                         return 'royal flush'
-                    # straight flush
-                    elif cards[0] - 4 == cards[4]:
-                        return 'straight flush'
+
                     else:
-                        # flush
-                        return 'flush'
+                        # straight flush
+                        if cards[0] - 4 == cards[4]:
+                            return 'straight flush'
+                        elif len(cards) == 6 and cards[1] - 4 == cards[5]:
+                            return 'straight flush'
+                        elif len(cards) == 7 and cards[2] - 4 == cards[6]:
+                            return 'straight flush'
+                        else:
+                            # flush
+                            return 'flush'
+
+            # pair matching
+            for k, v in occurrence.items():
+                if k == card[0]:
+                    occurrence[k] += 1
+
+        pair = 0
+        three = 0
+        four = 0
+        for k, v in occurrence.items():
+            if occurrence[k] == 2:  # there's a pair
+                pair += 1
+            elif occurrence[k] == 3:
+                three += 1
+            elif occurrence[k] == 4:
+                four += 1
+
+        if four >= 1:
+            return 'four of a kind'
+        elif three >= 1:
+            if pair >= 1:
+                return 'full house'
+            else:
+                return 'three of a kind'
+        elif pair == 1:
+            return 'one pair'
+        elif pair >= 2:
+            return 'two pair'
+
+        cards = sorted([hand[_][0] for _ in range(len(hand))], reverse=True)
+        if cards[0] - 4 == cards[4]:
+            return 'straight'
+        elif len(cards) >= 6 and cards[1] - 4 == cards[5]:
+            return 'straight'
+        elif len(cards) >= 7 and cards[2] - 4 == cards[6]:
+            return 'straight'
 
 
 game = TestGame('surface')
 an_test = WinAnalyzer(game.table.cards, game.players)
-test_hand = [(2, 'diamonds'), (3, 'diamonds'), (4, 'diamonds'), (5, 'diamonds'), (6, 'diamonds')]
+test_hand = [(2, 'diamonds'), (3, 'spades'), (4, 'hearts'), (5, 'diamonds'), (6, 'diamonds'), (10, 'diamonds')]
 print(an_test.evaluate(test_hand))
