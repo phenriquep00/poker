@@ -64,6 +64,7 @@ class Card:
         :param value: number of the card, from 2 to 14
         :param suit: card's suit
         """
+
         self.image = pygame.image.load(os.path.join('pics', f'{suit}', f'{image}'))
         self.image_back = pygame.image.load(os.path.join('pics', 'card-back.png'))
         self.value = value
