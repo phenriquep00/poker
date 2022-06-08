@@ -2,7 +2,7 @@ import os
 import pygame
 import random
 
-from poker.functions import blit_rotate_center, COLOR
+from poker.functions import blit_rotate_center, COLOR, RANKING
 from poker.Classes.Cards.cards import Deck
 from poker.Classes.Player.player import Player
 from poker.Classes.Player.bot import Bot
@@ -11,6 +11,7 @@ from poker.Classes.Labels.labels import Label
 from poker.Classes.BetMenu.bet_menu import BetMenu
 from poker.Classes.BetMenu.chips_selector import ChipsSelector
 from poker.Classes.GameMenu.game_menu import GameMenu
+from poker.Classes.Analyzer.win_analyzer import WinAnalyzer
 
 
 class Game:
@@ -50,6 +51,9 @@ class Game:
         self.min = 10
 
         self.__first_actions()
+
+        self.win_analyzer = WinAnalyzer(self.table.cards, self.players)
+        self.winner = ''
 
     def start_game(self):
         """
@@ -148,6 +152,23 @@ class Game:
                     self.bet_menu.draw()
                     if self.chip_selector.active:
                         self.chip_selector.draw()
+            else:
+                # reveal the bot's cards
+                # bot1 cards
+                blit_rotate_center(self.surf, self.bot1.hand[0].image, (0, 240), 90)
+                blit_rotate_center(self.surf, self.bot1.hand[1].image, (0, 280), 90)
+
+                # bot2 cards
+                self.surf.blit(self.bot2.hand[0].image, (380, 0))
+                self.surf.blit(self.bot2.hand[1].image, (420, 0))
+
+                # bot3 cards
+                blit_rotate_center(self.surf, self.bot3.hand[0].image, (811, 240), 90)
+                blit_rotate_center(self.surf, self.bot3.hand[1].image, (811, 280), 90)
+
+                self.winner = self.get_winner()
+                winner_text = Label(self.surf, 200, 200, f'Winner: {self.winner.name} with {self.winner.rank[0]}', 'm')
+                winner_text.draw()
 
             # game menu
             self.game_menu.draw()
@@ -241,3 +262,23 @@ class Game:
             else:
                 _. active = False
             _.done = False
+
+    def get_winner(self):
+        rank = RANKING
+
+        # evaluate all hands
+        self.player.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.player))
+        self.bot1.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot1))
+        self.bot2.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot2))
+        self.bot3.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot3))
+
+        for k, v in rank.items():
+            for player in self.players:
+                if player.rank[0] == k:
+                    rank[k].append(player)
+        for k, v in rank.items():
+            if len(rank[k]) != 0:
+                if len(rank[k]) == 1:
+                    return rank[k][0]
+                else:
+                    return rank[k][0]

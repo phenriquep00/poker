@@ -12,6 +12,7 @@ class Player:
         self.playing = True
         self.active = False
         self.done = False
+        self.rank = ''
 
     def bet(self, amount):
         if self.active and self.chips > 0:

@@ -11,6 +11,20 @@ FONT_G = pygame.font.Font('freesansbold.ttf', 40)
 FONT_M = pygame.font.Font('freesansbold.ttf', 24)
 FONT_P = pygame.font.Font('freesansbold.ttf', 16)
 
+RANKING = {
+    'royal flush': [],
+    'straight flush': [],
+    'four of a kind': [],
+    'full house': [],
+    'flush': [],
+    'straight': [],
+    'three of a kind': [],
+    'two pair': [],
+    'one pair': [],
+    'high card': []
+}
+
+
 # color handler
 COLOR = Colors()
 

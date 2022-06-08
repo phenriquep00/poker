@@ -1,18 +1,14 @@
-from test_game import TestGame
-
-
 class WinAnalyzer:
     def __init__(self, table_cards, players):
         self.table_cards = table_cards
         self.players = players
         self.hands = dict()
-        self.__order_hands()
 
-    def __order_hands(self):
-        for player in self.players:
-            self.hands[player.name] = [self.__get_utils(player.hand[_]) for _ in range(2)]
-            for _ in range(5):
-                self.hands[player.name].append(self.__get_utils(self.table_cards[_]))
+    def order_hand(self, player):
+        new_hand = [self.__get_utils(player.hand[_]) for _ in range(2)]
+        for _ in range(5):
+            new_hand.append(self.__get_utils(self.table_cards[_]))
+        return new_hand
 
     @staticmethod
     def __get_utils(card):
@@ -21,6 +17,8 @@ class WinAnalyzer:
     @staticmethod
     def evaluate(hand):
         h, s, d, c = [], [], [], []
+
+        total = sum(sorted([hand[_][0] for _ in range(len(hand))], reverse=True)[:5])
 
         occurrence = {}
         for i in range(2, 15):
@@ -45,19 +43,19 @@ class WinAnalyzer:
                     # royal flush
                     if sum(cards[:5]) >= 60:
                         # if true, there's a royal flush
-                        return 'royal flush'
+                        return 'royal flush', total
 
                     else:
                         # straight flush
                         if cards[0] - 4 == cards[4]:
-                            return 'straight flush'
+                            return 'straight flush', total
                         elif len(cards) == 6 and cards[1] - 4 == cards[5]:
-                            return 'straight flush'
+                            return 'straight flush', total
                         elif len(cards) == 7 and cards[2] - 4 == cards[6]:
-                            return 'straight flush'
+                            return 'straight flush', total
                         else:
                             # flush
-                            return 'flush'
+                            return 'flush', total
 
             # pair matching
             for k, v in occurrence.items():
@@ -76,27 +74,24 @@ class WinAnalyzer:
                 four += 1
 
         if four >= 1:
-            return 'four of a kind'
+            return 'four of a kind', total
         elif three >= 1:
             if pair >= 1:
-                return 'full house'
+                return 'full house', total
             else:
-                return 'three of a kind'
+                return 'three of a kind', total
         elif pair == 1:
-            return 'one pair'
+            return 'one pair', total
         elif pair >= 2:
-            return 'two pair'
+            return 'two pair', total
 
         cards = sorted([hand[_][0] for _ in range(len(hand))], reverse=True)
         if cards[0] - 4 == cards[4]:
-            return 'straight'
+            return 'straight', total
         elif len(cards) >= 6 and cards[1] - 4 == cards[5]:
-            return 'straight'
+            return 'straight', total
         elif len(cards) >= 7 and cards[2] - 4 == cards[6]:
-            return 'straight'
+            return 'straight', total
 
+        return 'high card', total
 
-game = TestGame('surface')
-an_test = WinAnalyzer(game.table.cards, game.players)
-test_hand = [(2, 'diamonds'), (3, 'spades'), (4, 'hearts'), (5, 'diamonds'), (6, 'diamonds'), (10, 'diamonds')]
-print(an_test.evaluate(test_hand))
