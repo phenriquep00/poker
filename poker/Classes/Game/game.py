@@ -143,10 +143,11 @@ class Game:
             pot.draw()
 
             # bet menu
-            if self.player.active:
-                self.bet_menu.draw()
-                if self.chip_selector.active:
-                    self.chip_selector.draw()
+            if self.round < 4:
+                if self.player.active:
+                    self.bet_menu.draw()
+                    if self.chip_selector.active:
+                        self.chip_selector.draw()
 
             # game menu
             self.game_menu.draw()
@@ -163,11 +164,6 @@ class Game:
             elif self.round >= 3:
                 for _ in range(5):
                     self.surf.blit(self.table.cards[_].image, coordinates[_])
-
-            # active
-            # DEBUG ONLY
-            turno = Label(self.surf, 700, 0, f'"debug"round: {self.round}', 'm')
-            turno.draw()
 
     def __first_actions(self):
         """
