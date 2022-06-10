@@ -110,13 +110,17 @@ bot3 = 2s, 3h, , 7h, 7p, 7s, js, 5h
     from poker.Classes.Player.bot import Bot
 
     p1 = Player('player')
-    p1.hand = [(8, 'clubs'), (11, "diamonds"), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    p1.hand = [(8, 'clubs'), (11, "diamonds"), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'),
+               (5, 'hearts')]
     b1 = Bot('bot1')
-    b1.hand = [(14, 'clubs'), (13, 'clubs'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b1.hand = [(14, 'clubs'), (13, 'clubs'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'),
+               (5, 'hearts')]
     b2 = Bot('bot2')
-    b2.hand = [(6, 'diamonds'), (13, 'diamonds'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b2.hand = [(6, 'diamonds'), (13, 'diamonds'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'),
+               (5, 'hearts')]
     b3 = Bot('bot3')
-    b3.hand = [(2, 'spades'), (3, 'hearts'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b3.hand = [(2, 'spades'), (3, 'hearts'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'),
+               (5, 'hearts')]
 
     an = WinAnalyzer([(7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')])
 
