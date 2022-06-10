@@ -53,7 +53,6 @@ class Game:
 
         self.__first_actions()
 
-        self.win_analyzer = WinAnalyzer(self.table.cards, self.players)
         self.winner = Player
         self.end_btn = Button(self.surf, COLOR.dark_blue2, 720, 520, 85, 50, 'NEXT', 'm')
 
@@ -272,26 +271,29 @@ class Game:
 
     def get_winner(self):
         rank = RANKING
+        win_analyzer = WinAnalyzer(self.table.cards)
         # TODO: remake this
         # evaluate all hands
-        self.player.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.player))
-        self.bot1.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot1))
-        self.bot2.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot2))
-        self.bot3.rank = self.win_analyzer.evaluate(self.win_analyzer.order_hand(self.bot3))
+        self.player.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.player))
+        self.bot1.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot1))
+        self.bot2.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot2))
+        self.bot3.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot3))
 
         for k, v in rank.items():
             for player in self.players:
                 if player.rank[0] == k:
                     rank[k].append(player)
+
         for k, v in rank.items():
             if len(rank[k]) != 0:
-                if len(rank[k]) == 1:
-                    return rank[k][0]
-                else:
-                    return rank[k][0]
+                return rank[k][0]
 
     def end_round(self):
         self.winner.chips += self.table.pot
         self.table.pot = 0
+
         self.deck.reset()
+        for player in self.players:
+            player.reset_hand()
+
         self.__first_actions()

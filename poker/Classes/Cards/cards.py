@@ -59,6 +59,8 @@ class Deck:
         self.spades = [Card(image=f'{_}.png', value=_, suit='spades') for _ in range(2, 15)]
         self.deck = []
 
+        self.shuffle()
+
 
 class Card:
     """

@@ -30,3 +30,6 @@ class Player:
 
     def fold(self):
         self.playing = False
+
+    def reset_hand(self):
+        self.hand = []

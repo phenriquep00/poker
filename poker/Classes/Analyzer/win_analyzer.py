@@ -1,8 +1,6 @@
 class WinAnalyzer:
-    def __init__(self, table_cards, players):
+    def __init__(self, table_cards):
         self.table_cards = table_cards
-        self.players = players
-        self.hands = dict()
 
     def order_hand(self, player):
         new_hand = [self.__get_utils(player.hand[_]) for _ in range(2)]
@@ -95,3 +93,37 @@ class WinAnalyzer:
 
         return 'high card', total
 
+
+if __name__ == '__main__':
+    """
+    player = 8p, jo, 7h, 7p, 7s, js, 5h
+
+bot1 = ap, kp, 7h, 7p, 7s, js, 5h
+
+bot2 = 6o, ko , 7h, 7p, 7s, js, 5h
+
+bot3 = 2s, 3h, , 7h, 7p, 7s, js, 5h
+"""
+    from poker.Classes.Player.player import Player
+    from poker.Classes.Player.bot import Bot
+
+    p1 = Player('player')
+    p1.hand = [(8, 'clubs'), (11, "diamonds"), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b1 = Bot('bot1')
+    b1.hand = [(14, 'clubs'), (13, 'clubs'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b2 = Bot('bot2')
+    b2.hand = [(6, 'diamonds'), (13, 'diamonds'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+    b3 = Bot('bot3')
+    b3.hand = [(2, 'spades'), (3, 'hearts'), (7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')]
+
+    an = WinAnalyzer([(7, 'hearts'), (7, 'clubs'), (7, 'spades'), (11, 'spades'), (5, 'hearts')])
+
+    p1.rank = an.evaluate(p1.hand)
+    b1.rank = an.evaluate(b1.hand)
+    b2.rank = an.evaluate(b2.hand)
+    b3.rank = an.evaluate(b3.hand)
+
+    print(p1.rank)
+    print(b1.rank)
+    print(b2.rank)
+    print(b3.rank)
