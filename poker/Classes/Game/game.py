@@ -272,7 +272,6 @@ class Game:
     def get_winner(self):
         rank = RANKING
         win_analyzer = WinAnalyzer(self.table.cards)
-        # TODO: remake this
         # evaluate all hands
         self.player.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.player))
         self.bot1.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot1))

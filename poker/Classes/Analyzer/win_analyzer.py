@@ -104,6 +104,8 @@ bot2 = 6o, ko , 7h, 7p, 7s, js, 5h
 
 bot3 = 2s, 3h, , 7h, 7p, 7s, js, 5h
 """
+
+    # some testing
     from poker.Classes.Player.player import Player
     from poker.Classes.Player.bot import Bot
 

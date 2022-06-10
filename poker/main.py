@@ -74,11 +74,11 @@ while run:
                             game.table.get_chips(current_player.bet(game.min))
 
                         else:
-                            game.table.get_chips(current_player.bet(game.min))  # only min value for now
+                            game.table.get_chips(current_player.bet(game.min))  # change this to a custom value
 
                         game.next()
                     elif 4 > game.round >= 1:
-                        game.table.get_chips(current_player.bet(game.min))
+                        game.table.get_chips(current_player.bet(game.min))  # change this to a custom value
 
                         game.next()
                         if current_player == game.bot3:
