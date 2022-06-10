@@ -76,7 +76,7 @@ class WinAnalyzer:
         if four >= 1:
             return 'four of a kind', total
         elif three >= 1:
-            if pair >= 1:
+            if pair >= 1 and three >= 1:
                 return 'full house', total
             else:
                 return 'three of a kind', total
