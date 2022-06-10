@@ -293,4 +293,5 @@ class Game:
     def end_round(self):
         self.winner.chips += self.table.pot
         self.table.pot = 0
+        self.deck.reset()
         self.__first_actions()

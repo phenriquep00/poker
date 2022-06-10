@@ -75,14 +75,14 @@ class WinAnalyzer:
 
         if four >= 1:
             return 'four of a kind', total
-        elif three >= 1:
+        if three >= 1:
             if pair >= 1 and three >= 1:
                 return 'full house', total
             else:
                 return 'three of a kind', total
-        elif pair == 1:
+        if pair == 1:
             return 'one pair', total
-        elif pair >= 2:
+        if pair >= 2:
             return 'two pair', total
 
         cards = sorted([hand[_][0] for _ in range(len(hand))], reverse=True)

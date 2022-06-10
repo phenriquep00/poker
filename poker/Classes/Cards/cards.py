@@ -52,6 +52,13 @@ class Deck:
             cards.append(_)
         return cards[0], cards[1], cards[2], cards[3], cards[4]
 
+    def reset(self):
+        self.clubs = [Card(image=f'{_}.png', value=_, suit='clubs') for _ in range(2, 15)]
+        self.diamonds = [Card(image=f'{_}.png', value=_, suit='diamonds') for _ in range(2, 15)]
+        self.hearts = [Card(image=f'{_}.png', value=_, suit='hearts') for _ in range(2, 15)]
+        self.spades = [Card(image=f'{_}.png', value=_, suit='spades') for _ in range(2, 15)]
+        self.deck = []
+
 
 class Card:
     """
