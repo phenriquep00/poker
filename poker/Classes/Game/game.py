@@ -297,3 +297,19 @@ class Game:
             player.reset_hand()
 
         self.__first_actions()
+
+    def restart(self):
+        self.round = 0
+        self.deck = Deck()
+        self.player = Player('Player')
+        self.table = Table()
+        self.bot1 = Bot('Bot1')
+        self.bot2 = Bot('Bot2')
+        self.bot3 = Bot('Bot3')
+        self.players = [self.player, self.bot1, self.bot2, self.bot3]
+        self.small = self.player
+        self.big = self.bot1
+        self.min = 10
+        self.__first_actions()
+        self.winner = Player
+        self.end_btn = Button(self.surf, COLOR.dark_blue2, 720, 520, 85, 50, 'NEXT', 'm')

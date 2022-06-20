@@ -33,3 +33,6 @@ class Player:
 
     def reset_hand(self):
         self.hand = []
+
+    def reset_chips(self, amount=500):
+        self.chips = amount

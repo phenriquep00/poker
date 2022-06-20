@@ -106,8 +106,19 @@ while run:
             if game.active:
 
                 # Menu
-                if game.game_menu.bg.handle_click.collidepoint(event.pos):
+                if game.game_menu.bg.handle_click.collidepoint(event.pos):  # toggle game_menu object
                     game.game_menu.toggle()
+                # game menu interactions
+                elif game.game_menu.active:
+                    if game.game_menu.exit_button.handle_click.collidepoint(event.pos):     # exit button clicked
+                        game.active = False
+                        is_menu_active = True
+                        game.game_menu.toggle()
+                        game.restart()
+
+                    if game.game_menu.restart_button.handle_click.collidepoint(event.pos):  # restart button clicked
+                        game.restart()
+                        game.game_menu.toggle()
 
                 # ChipSelector
                 if game.player.active:  # check if it's the player's turn
