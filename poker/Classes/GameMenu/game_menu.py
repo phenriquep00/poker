@@ -26,17 +26,15 @@ class GameMenu:
                 border=False
             )for _ in [8, 16, 24]
         ]
-        self.menu = Button(self.surf, COLOR.black, 0, 0, 230, 300, border=False)
+        self.menu = Button(self.surf, COLOR.black, 0, 0, 230, 230, border=False)
         self.card_combination_button = Button(self.surf, COLOR.black, 20, 50, 200, 50, 'Combinations', 'm')
-        self.configuration_button = Button(self.surf, COLOR.black, 20, 110, 200, 50, 'Configurations', 'm')
-        self.restart_button = Button(self.surf, COLOR.black, 20, 170, 200, 50, 'Restart', 'm')
-        self.exit_button = Button(self.surf, COLOR.black, 20, 230, 200, 50, 'Exit', 'm')
+        self.restart_button = Button(self.surf, COLOR.black, 20, 110, 200, 50, 'Restart', 'm')
+        self.exit_button = Button(self.surf, COLOR.black, 20, 170, 200, 50, 'Exit', 'm')
 
     def draw(self):
         if self.active:
             self.menu.draw()
             self.card_combination_button.draw()
-            self.configuration_button.draw()
             self.restart_button.draw()
             self.exit_button.draw()
 

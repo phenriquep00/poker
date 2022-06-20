@@ -120,6 +120,10 @@ while run:
                         game.restart()
                         game.game_menu.toggle()
 
+                    if game.game_menu.card_combination_button.handle_click.collidepoint(event.pos):     # combinations
+                        # clicked
+                        print('combination clicked')
+
                 # ChipSelector
                 if game.player.active:  # check if it's the player's turn
                     if game.chip_selector.active:  # chip_selector buttons click handler
