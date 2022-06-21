@@ -5,7 +5,7 @@ from poker.functions import COLOR
 from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
 from Classes.Configurations.configurations import Configurations
-from Classes.CardCombination.card_combination import CardCombination
+from Classes.HandRanking.hand_ranking import HandRanking
 
 # core pygame configuration
 WIDTH, HEIGHT = 901, 600  # window size
@@ -39,7 +39,7 @@ game = Game(window)
 # config windows
 configs = Configurations(window)
 # card combination
-card_combination = CardCombination(window, 50, 50, 800, 500)
+hand_ranking = HandRanking(window, 50, 50, 800, 500)
 
 run = True  # game loop control variable
 is_menu_active = True
@@ -91,8 +91,8 @@ while run:
         configs.draw()
         is_menu_active = False
 
-    if card_combination.active:
-        card_combination.draw()
+    if hand_ranking.active:
+        hand_ranking.draw()
 
     # event loop
     for event in pygame.event.get():
@@ -111,10 +111,10 @@ while run:
             # Game screen buttons event catch
             if game.active:
 
-                # Card Combination
-                if card_combination.active:
-                    if card_combination.close_button.handle_click.collidepoint(event.pos):  # close button clicked
-                        card_combination.toggle()   # close card combination window
+                # hand ranking
+                if hand_ranking.active:
+                    if hand_ranking.close_button.handle_click.collidepoint(event.pos):  # close button clicked
+                        hand_ranking.toggle()   # close hand ranking window
                 # Menu
                 if game.game_menu.bg.handle_click.collidepoint(event.pos):  # toggle game_menu object
                     game.game_menu.toggle()
@@ -132,7 +132,7 @@ while run:
 
                     if game.game_menu.card_combination_button.handle_click.collidepoint(event.pos):     # combinations
                         # clicked
-                        card_combination.toggle()
+                        hand_ranking.toggle()
                         game.game_menu.toggle()
 
                 # ChipSelector

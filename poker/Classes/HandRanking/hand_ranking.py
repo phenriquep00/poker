@@ -3,7 +3,7 @@ from poker.functions import COLOR
 from poker.Classes.Buttons.buttons import Button
 
 
-class CardCombination:
+class HandRanking:
     def __init__(self, surf, X, Y, wid, hei):
         self.active = False
         self.surf = surf
