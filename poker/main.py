@@ -111,6 +111,10 @@ while run:
             # Game screen buttons event catch
             if game.active:
 
+                # Card Combination
+                if card_combination.active:
+                    if card_combination.close_button.handle_click.collidepoint(event.pos):  # close button clicked
+                        card_combination.toggle()   # close card combination window
                 # Menu
                 if game.game_menu.bg.handle_click.collidepoint(event.pos):  # toggle game_menu object
                     game.game_menu.toggle()
