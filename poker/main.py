@@ -5,6 +5,7 @@ from poker.functions import COLOR
 from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
 from Classes.Configurations.configurations import Configurations
+from Classes.CardCombination.card_combination import CardCombination
 
 # core pygame configuration
 WIDTH, HEIGHT = 901, 600  # window size
@@ -37,6 +38,8 @@ terminate = Button(window, COLOR.dark_red1, ((WIDTH // 2) - 150), ((HEIGHT // 2)
 game = Game(window)
 # config windows
 configs = Configurations(window)
+# card combination
+card_combination = CardCombination(window, 50, 50, 800, 500)
 
 run = True  # game loop control variable
 is_menu_active = True
@@ -88,6 +91,9 @@ while run:
         configs.draw()
         is_menu_active = False
 
+    if card_combination.active:
+        card_combination.draw()
+
     # event loop
     for event in pygame.event.get():
         # close the window and terminate the application if the user clicks on the close button
@@ -122,7 +128,8 @@ while run:
 
                     if game.game_menu.card_combination_button.handle_click.collidepoint(event.pos):     # combinations
                         # clicked
-                        print('combination clicked')
+                        card_combination.toggle()
+                        game.game_menu.toggle()
 
                 # ChipSelector
                 if game.player.active:  # check if it's the player's turn
