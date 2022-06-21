@@ -3,8 +3,6 @@ from poker.Classes.Buttons.buttons import Button
 
 
 # TODO: Add a option to change the player and the bot's names
-# TODO: Add sound options
-# TODO: game difficulty
 class Configurations:
     def __init__(self, surface):
         """

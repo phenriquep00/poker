@@ -1,11 +1,6 @@
 from poker.functions import COLOR
 from poker.Classes.Buttons.buttons import Button
 
-# TODO: Add a sequence guide and ranking
-# TODO: Add a button to restart game
-# TODO: Add a button to go back to main screen
-# TODO: Add a button to go to config screen
-
 
 class GameMenu:
     """
