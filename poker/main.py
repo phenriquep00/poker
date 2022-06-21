@@ -39,7 +39,7 @@ game = Game(window)
 # config windows
 configs = Configurations(window)
 # card combination
-hand_ranking = HandRanking(window, 50, 50, 800, 500)
+hand_ranking = HandRanking(window, 0, 0, 389, 590)
 
 run = True  # game loop control variable
 is_menu_active = True
