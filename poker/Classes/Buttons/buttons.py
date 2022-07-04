@@ -88,3 +88,6 @@ class Button:
         elif 'P' in self.font_size.upper().strip():
             text = FONT_P.render(f'{self.value}', True, COLOR.white)
             self.surf.blit(text, ((self.X + 5), (self.Y + 4)))
+
+    def change_color(self, new_color):
+        self.color = new_color

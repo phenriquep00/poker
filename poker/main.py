@@ -107,6 +107,14 @@ while run:
                 if configs.back_button.handle_click.collidepoint(event.pos):
                     configs.toggle_config()
                     is_menu_active = True
+                if configs.sound_button_off.handle_click.collidepoint(event.pos):
+                    configs.is_sound_on = False
+                    configs.sound_button_off.change_color(COLOR.red)
+                    configs.sound_button_on.change_color(COLOR.dark_gray1)
+                if configs.sound_button_on.handle_click.collidepoint(event.pos):
+                    configs.is_sound_on = True
+                    configs.sound_button_on.change_color(COLOR.green)
+                    configs.sound_button_off.change_color(COLOR.dark_gray1)
 
             # Game screen buttons event catch
             if game.active:

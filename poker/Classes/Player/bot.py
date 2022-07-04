@@ -7,4 +7,7 @@ class Bot(Player):
         super().__init__(name)
 
     def evaluate(self, minimum):
+        # TODO: make this function return a value between 0 and 1, the closer to 1, the greater is the chance to win
         pass
+
+
