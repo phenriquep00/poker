@@ -1,6 +1,7 @@
 import os
 import pygame
 
+from Classes.Labels.labels import Label
 from poker.functions import COLOR
 from Classes.Game.game import Game
 from Classes.Buttons.buttons import Button
@@ -33,6 +34,8 @@ play = Button(window, COLOR.dark_green1, ((WIDTH // 2) - 150), ((HEIGHT // 2) - 
 config = Button(window, COLOR.dark_blue1, ((WIDTH // 2) - 150), ((HEIGHT // 2) + 20), 300, 100, 'Configuration', 'g')  #
 # configurations button
 terminate = Button(window, COLOR.dark_red1, ((WIDTH // 2) - 150), ((HEIGHT // 2) + 160), 300, 100, 'EXIT', 'g')
+# credits
+creator_credits = Label(window, 760, 580, 'by phenriquep00', 'p')
 
 # game window
 game = Game(window)
@@ -50,6 +53,7 @@ while run:
     play.draw()
     config.draw()
     terminate.draw()
+    creator_credits.draw()
 
     # check if whether the game or the configs object is active, to blit them and toggle the is_menu_active variable
     # to deactivate the menu buttons

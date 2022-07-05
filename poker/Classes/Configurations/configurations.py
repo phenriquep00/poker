@@ -3,7 +3,6 @@ from poker.Classes.Buttons.buttons import Button
 from poker.Classes.Labels.labels import Label
 
 
-# TODO: Add a option to change the player and the bot's names
 class Configurations:
     def __init__(self, surface):
         """
