@@ -103,10 +103,12 @@ while run:
         # close the window and terminate the application if the user clicks on the close button
         if event.type == pygame.QUIT:
             run = False
-
+        # configs input box event handler
+        if configs.active:
+            configs.player_name_input_box.handle_event(event)
         # check if the mouse was clicked
         if event.type == pygame.MOUSEBUTTONUP:
-            # Config screen buttons event catch
+            # Config screen buttons click event catch
             if configs.active:
                 if configs.back_button.handle_click.collidepoint(event.pos):
                     configs.toggle_config()
