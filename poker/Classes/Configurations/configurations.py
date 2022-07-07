@@ -28,6 +28,14 @@ class Configurations:
         self.player_name = Label(self.surface, 100, 200, 'Player Name: ', 'g')
         # player name input box
         self.player_name_input_box = InputBox(self.surface, 370, 180, 300, 80)
+        # difficulty label
+        self.difficulty_label = Label(self.surface, 100, 300, 'Difficulty: ', 'g')
+        # difficulty easy option
+        self.difficulty_easy = Button(self.surface, COLOR.dark_gray1, 300, 300, 130, 60, 'EASY', 'm')
+        # difficulty normal option
+        self.difficulty_normal = Button(self.surface, COLOR.green, 440, 300, 130, 60, 'NORMAL', 'm')
+        # difficulty hard option
+        self.difficulty_hard = Button(self.surface, COLOR.dark_gray1, 580, 300, 130, 60, 'HARD', 'm')
 
     def draw(self):
         """
@@ -46,6 +54,12 @@ class Configurations:
         # player name options
         self.player_name.draw()
         self.player_name_input_box.draw()
+
+        # difficulty options
+        self.difficulty_label.draw()
+        self.difficulty_easy.draw()
+        self.difficulty_normal.draw()
+        self.difficulty_hard.draw()
 
     def toggle_config(self):
         """
