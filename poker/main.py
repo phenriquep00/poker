@@ -58,6 +58,8 @@ while run:
     # check if whether the game or the configs object is active, to blit them and toggle the is_menu_active variable
     # to deactivate the menu buttons
     if game.active:  # game is currently going
+        # update player name
+        game.player.update_name(configs.player_name_input_box.export_name())
         game.draw()
         is_menu_active = False
         for current_player in game.players:

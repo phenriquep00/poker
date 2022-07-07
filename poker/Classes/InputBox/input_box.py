@@ -44,3 +44,6 @@ class InputBox:
         self.surface.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         # Blit the rect.
         pg.draw.rect(self.surface, self.color, self.rect, 2)
+
+    def export_name(self):
+        return self.text

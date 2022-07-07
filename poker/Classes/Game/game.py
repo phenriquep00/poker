@@ -21,6 +21,7 @@ class Game:
     A game object that holds the occurrence of the game, the table, the deck, the cards, the players the bots and the
     chips
     """
+
     def __init__(self, surf):
         """
         :param: surf: surface where the game object will be created
@@ -56,6 +57,19 @@ class Game:
 
         self.winner = Player
         self.end_btn = Button(self.surf, COLOR.dark_blue2, 720, 520, 85, 50, 'NEXT', 'm')
+
+        self.rank = {
+            'royal flush': [],
+            'straight flush': [],
+            'four of a kind': [],
+            'full house': [],
+            'flush': [],
+            'straight': [],
+            'three of a kind': [],
+            'two pair': [],
+            'one pair': [],
+            'high card': []
+        }
 
     def start_game(self):
         """
@@ -96,13 +110,13 @@ class Game:
 
             # player draw
             # player's name
-            player_name = Label(self.surf, 400, 470, f'{self.player.name}', 'm')
+            player_name = Label(self.surf, 400, 470, f'{self.player.display_name}', 'm')
             player_name.draw()
             # player's cards
             self.surf.blit(self.player.hand[0].image, (380, 500))
             self.surf.blit(self.player.hand[1].image, (420, 500))
             # player's chips
-            self.surf.blit(self.chip_img, (500, 560))   # chip image
+            self.surf.blit(self.chip_img, (500, 560))  # chip image
             player_chip = Label(self.surf, 535, 570, f'{self.player.chips}', 'p')
             player_chip.draw()
 
@@ -115,7 +129,7 @@ class Game:
             blit_rotate_center(self.surf, self.bot1.hand[0].image_back, (0, 240), 90)
             blit_rotate_center(self.surf, self.bot1.hand[1].image_back, (0, 280), 90)
             # bot1 chips
-            self.surf.blit(self.chip_img, (0, 220))     # chip's image
+            self.surf.blit(self.chip_img, (0, 220))  # chip's image
             bot1_chip = Label(self.surf, 35, 230, f'{self.bot1.chips}', 'p')
             bot1_chip.draw()
 
@@ -127,7 +141,7 @@ class Game:
             self.surf.blit(self.bot2.hand[0].image_back, (380, 0))
             self.surf.blit(self.bot2.hand[1].image_back, (420, 0))
             # bot2 chips
-            self.surf.blit(self.chip_img, (490, 0))     # chip's image
+            self.surf.blit(self.chip_img, (490, 0))  # chip's image
             bot2_chip = Label(self.surf, 525, 10, f'{self.bot2.chips}', 'p')
             bot2_chip.draw()
 
@@ -169,7 +183,14 @@ class Game:
                 blit_rotate_center(self.surf, self.bot3.hand[1].image, (811, 280), 90)
 
                 self.winner = self.get_winner()
-                winner_text = Label(self.surf, 200, 200, f'Winner: {self.winner.name} with {self.winner.rank[0]}', 'm')
+                winner_text = Label(
+                    self.surf,
+                    200,
+                    200,
+                    f'Winner: {self.winner.name if self.winner.name.startswith("Bot") else self.player.display_name}'
+                    f' with {self.winner.rank[0]}',
+                    'm'
+                )
                 winner_text.draw()
 
                 self.end_btn.draw()
@@ -213,6 +234,18 @@ class Game:
 
         self.small.active = True
         self.min = 10
+        self.rank = {
+            'royal flush': [],
+            'straight flush': [],
+            'four of a kind': [],
+            'full house': [],
+            'flush': [],
+            'straight': [],
+            'three of a kind': [],
+            'two pair': [],
+            'one pair': [],
+            'high card': []
+        }
 
     def next(self):
         """
@@ -264,14 +297,15 @@ class Game:
         self.round += 1
         self.min = 0
         for _ in self.players:
+
             if _ == self.small:
                 _.active = True
             else:
-                _. active = False
+                _.active = False
             _.done = False
 
     def get_winner(self):
-        rank = RANKING
+
         win_analyzer = WinAnalyzer(self.table.cards)
         # evaluate all hands
         self.player.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.player))
@@ -279,14 +313,14 @@ class Game:
         self.bot2.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot2))
         self.bot3.rank = win_analyzer.evaluate(win_analyzer.order_hand(self.bot3))
 
-        for k, v in rank.items():
+        for k, v in self.rank.items():
             for player in self.players:
                 if player.rank[0] == k:
-                    rank[k].append(player)
+                    self.rank[k].append(player)
 
-        for k, v in rank.items():
-            if len(rank[k]) != 0:
-                return rank[k][0]
+        for k, v in self.rank.items():
+            if len(self.rank[k]) != 0:
+                return self.rank[k][0]
 
     def end_round(self):
         self.winner.chips += self.table.pot

@@ -11,6 +11,7 @@ class Player:
         self.hand = []
         self.chips = 500
         self.name = name
+        self.display_name = ''
         self.playing = True
         self.active = False
         self.done = False
@@ -36,3 +37,6 @@ class Player:
 
     def reset_chips(self, amount=500):
         self.chips = amount
+
+    def update_name(self, new_name):
+        self.display_name = new_name
