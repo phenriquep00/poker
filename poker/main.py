@@ -112,13 +112,18 @@ while run:
         if event.type == pygame.MOUSEBUTTONUP:
             # Config screen buttons click event catch
             if configs.active:
+                # back button clicked
                 if configs.back_button.handle_click.collidepoint(event.pos):
                     configs.toggle_config()
                     is_menu_active = True
+
+                # sound buttons interaction
+                # sound button OFF clicked
                 if configs.sound_button_off.handle_click.collidepoint(event.pos):
                     configs.is_sound_on = False
                     configs.sound_button_off.change_color(COLOR.red)
                     configs.sound_button_on.change_color(COLOR.dark_gray1)
+                # sound button ON clicked
                 if configs.sound_button_on.handle_click.collidepoint(event.pos):
                     configs.is_sound_on = True
                     configs.sound_button_on.change_color(COLOR.green)
