@@ -14,6 +14,7 @@ class Configurations:
         self.active = False
 
         self.is_sound_on = True
+        self.difficulty = 'normal'
 
         # elements
         # back button

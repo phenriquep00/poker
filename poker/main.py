@@ -129,6 +129,26 @@ while run:
                     configs.sound_button_on.change_color(COLOR.green)
                     configs.sound_button_off.change_color(COLOR.dark_gray1)
 
+                # difficulty buttons interaction
+                # EASY clicked
+                if configs.difficulty_easy.handle_click.collidepoint(event.pos):
+                    configs.difficulty = 'easy'
+                    configs.difficulty_easy.change_color(COLOR.green)
+                    configs.difficulty_normal.change_color(COLOR.dark_gray1)
+                    configs.difficulty_hard.change_color(COLOR.dark_gray1)
+                # NORMAL clicked
+                if configs.difficulty_normal.handle_click.collidepoint(event.pos):
+                    configs.difficulty = 'normal'
+                    configs.difficulty_easy.change_color(COLOR.dark_gray1)
+                    configs.difficulty_normal.change_color(COLOR.green)
+                    configs.difficulty_hard.change_color(COLOR.dark_gray1)
+                # HARD clicked
+                if configs.difficulty_hard.handle_click.collidepoint(event.pos):
+                    configs.difficulty = 'hard'
+                    configs.difficulty_easy.change_color(COLOR.dark_gray1)
+                    configs.difficulty_normal.change_color(COLOR.dark_gray1)
+                    configs.difficulty_hard.change_color(COLOR.green)
+
             # Game screen buttons event catch
             if game.active:
 
